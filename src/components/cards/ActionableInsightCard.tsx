@@ -117,8 +117,8 @@ export default function ActionableInsightCard({
         </div>
       )}
       <div className="relative flex min-h-0 flex-1 flex-col px-3 pb-3 pt-3 md:px-4 md:pb-4 md:pt-4">
-        {/* Signal + context: flex-1 so space above CTA is used; content stays at top */}
-        <div className="flex min-h-0 min-w-0 flex-1 flex-col overflow-hidden">
+        {/* Signal + context: flex-1 + justify-center so content is vertically centered in the available space */}
+        <div className="flex min-h-0 min-w-0 flex-1 flex-col justify-center overflow-hidden">
           <div className="flex min-h-0 min-w-0 shrink-0 flex-col overflow-hidden">
             {signal}
           </div>
