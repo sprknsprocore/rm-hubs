@@ -56,9 +56,10 @@ export default function LeftNav({ currentWorkspaceLabel, expanded = true }: Left
   const basePath = useHubBasePath()
   const currentDomain = useCurrentDomain()
 
-  const isCompanyHome = location.pathname === '/' && !location.search
-  const isResourcesSectionActive =
-    currentDomain !== 'hub' || location.pathname === '/workflow/off-rent-idle'
+  // LeftNav only renders inside Resource Management layouts, so Resources is always the active section.
+  // Home is a placeholder for Procore company home — never the active page here.
+  const isCompanyHome = false
+  const isResourcesSectionActive = true
 
   const getDomainPath = (domain: Domain) =>
     domain === 'hub' ? basePath : `${basePath}${basePath.includes('?') ? '&' : '?'}domain=${domain}`
