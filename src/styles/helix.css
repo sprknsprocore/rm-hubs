@@ -1,0 +1,44 @@
+/* Helix Vision design tokens – align with Figma */
+.helix-root {
+  /* Backgrounds */
+  --helix-bg-page: #f0f2f5;
+  --helix-bg-nav: #1c1f26;
+  --helix-bg-nav-hover: #252a33;
+  --helix-bg-nav-active: #2d3239;
+  --helix-bg-card: #ffffff;
+  --helix-bg-input: #f8f9fa;
+  --helix-bg-cta-pill: #fff4ed;
+  --helix-bg-cta-pill-hover: #ffebe0;
+
+  /* Borders */
+  --helix-border-card: #e8eaed;
+  --helix-border-divider: #f0f1f3;
+  --helix-border-nav: #2d3239;
+
+  /* Primary (Procore orange) */
+  --helix-primary: #e87722;
+  --helix-primary-hover: #d96b1c;
+  --helix-primary-muted: #fff4ed;
+
+  /* Text */
+  --helix-text-primary: #1a1d21;
+  --helix-text-secondary: #5f6b7a;
+  --helix-text-muted: #8b95a5;
+  --helix-text-inverse: #ffffff;
+
+  /* Semantic */
+  --helix-error: #c53030;
+  --helix-error-bg: #fff5f5;
+  --helix-success: #2f855a;
+  --helix-warning: #b45309;
+
+  /* Layout */
+  --helix-nav-width: 56px;
+  --helix-rail-width: 48px;
+  --helix-top-height: 56px;
+  --helix-radius-card: 8px;
+  --helix-radius-pill: 9999px;
+  --helix-space-card: 20px;
+  --helix-grid-gap: 24px;
+  --helix-content-max: 1200px;
+}
