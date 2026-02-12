@@ -13,13 +13,14 @@ import type { BudgetVsActualPoint } from '../../../hooks/useHubData'
 
 interface BudgetVsActualCardProps {
   data: BudgetVsActualPoint[]
+  onExpand?: (insightId: string) => void
 }
 
 function formatK(value: number): string {
   return `$${(value / 1000).toFixed(0)}k`
 }
 
-export default function BudgetVsActualCard({ data }: BudgetVsActualCardProps) {
+export default function BudgetVsActualCard({ data, onExpand }: BudgetVsActualCardProps) {
   const latest = data[data.length - 1]
   const ratio = latest ? (latest.actual / latest.budgeted).toFixed(2) : '—'
   const overBudget = latest ? latest.actual > latest.budgeted : false
@@ -78,8 +79,9 @@ export default function BudgetVsActualCard({ data }: BudgetVsActualCardProps) {
       title="Budget vs. Actual"
       signal={signal}
       context={context}
-      kickoff={{ label: 'Review Forecast', onClick: () => {} }}
+      kickoff={{ label: 'Review Forecast', onClick: () => onExpand?.('budget-vs-actual') }}
       kickoffPriority="p2"
+      onInsightExpand={onExpand ? () => onExpand('budget-vs-actual') : undefined}
     />
   )
 }

@@ -3,9 +3,10 @@ import type { DailyHuddleRecapData } from '../../../hooks/useHubData'
 
 interface DailyHuddleRecapCardProps {
   data: DailyHuddleRecapData
+  onExpand?: (insightId: string) => void
 }
 
-export default function DailyHuddleRecapCard({ data }: DailyHuddleRecapCardProps) {
+export default function DailyHuddleRecapCard({ data, onExpand }: DailyHuddleRecapCardProps) {
   const dateLabel = new Date(data.date).toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' })
   const metrics = Object.keys(data.goalQuantities)
 
@@ -65,8 +66,9 @@ export default function DailyHuddleRecapCard({ data }: DailyHuddleRecapCardProps
       title="Daily Huddle Recap"
       signal={signal}
       context={context}
-      kickoff={{ label: 'Update Goals', onClick: () => {} }}
+      kickoff={{ label: 'Update Goals', onClick: () => onExpand?.('daily-huddle') }}
       kickoffPriority="p2"
+      onInsightExpand={onExpand ? () => onExpand('daily-huddle') : undefined}
     />
   )
 }

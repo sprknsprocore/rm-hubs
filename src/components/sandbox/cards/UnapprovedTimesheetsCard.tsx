@@ -4,9 +4,10 @@ import type { UnapprovedTimesheet } from '../../../hooks/useHubData'
 
 interface UnapprovedTimesheetsCardProps {
   data: UnapprovedTimesheet[]
+  onExpand?: (insightId: string) => void
 }
 
-export default function UnapprovedTimesheetsCard({ data }: UnapprovedTimesheetsCardProps) {
+export default function UnapprovedTimesheetsCard({ data, onExpand }: UnapprovedTimesheetsCardProps) {
   const totalHours = data.reduce((s, d) => s + d.totalHours, 0)
 
   const signal = (
@@ -63,8 +64,9 @@ export default function UnapprovedTimesheetsCard({ data }: UnapprovedTimesheetsC
       title="Unapproved Timesheet Blockers"
       signal={signal}
       context={context}
-      kickoff={{ label: 'Approve Time', onClick: () => {} }}
+      kickoff={{ label: 'Approve Time', onClick: () => onExpand?.('unapproved-timesheets') }}
       kickoffPriority="p1"
+      onInsightExpand={onExpand ? () => onExpand('unapproved-timesheets') : undefined}
     />
   )
 }

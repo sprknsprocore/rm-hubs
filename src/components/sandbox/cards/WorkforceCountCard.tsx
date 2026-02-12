@@ -3,9 +3,10 @@ import ActionableInsightCard from '../../cards/ActionableInsightCard'
 
 interface WorkforceCountCardProps {
   data: { planned: number; actual: number }
+  onExpand?: (insightId: string) => void
 }
 
-export default function WorkforceCountCard({ data }: WorkforceCountCardProps) {
+export default function WorkforceCountCard({ data, onExpand }: WorkforceCountCardProps) {
   const delta = data.actual - data.planned
   const pct = Math.round((data.actual / data.planned) * 100)
   const isShort = data.actual < data.planned
@@ -96,8 +97,9 @@ export default function WorkforceCountCard({ data }: WorkforceCountCardProps) {
       title="Total Workforce Count"
       signal={signal}
       context={context}
-      kickoff={{ label: 'Request Crew', onClick: () => {} }}
+      kickoff={{ label: 'Request Crew', onClick: () => onExpand?.('workforce-count') }}
       kickoffPriority={isShort ? 'p1' : 'p2'}
+      onInsightExpand={onExpand ? () => onExpand('workforce-count') : undefined}
     />
   )
 }

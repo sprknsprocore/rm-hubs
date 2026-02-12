@@ -4,9 +4,10 @@ import type { BurnCurveData } from '../../../hooks/useHubData'
 
 interface BurnCurveCardProps {
   data: BurnCurveData
+  onExpand?: (insightId: string) => void
 }
 
-export default function BurnCurveCard({ data }: BurnCurveCardProps) {
+export default function BurnCurveCard({ data, onExpand }: BurnCurveCardProps) {
   const signal = (
     <div className="flex flex-col gap-3">
       {data.delayFlag && (
@@ -55,8 +56,9 @@ export default function BurnCurveCard({ data }: BurnCurveCardProps) {
       title="Burn Curve"
       signal={signal}
       context={context}
-      kickoff={{ label: 'Create Delay Notice', onClick: () => {} }}
+      kickoff={{ label: 'Create Delay Notice', onClick: () => onExpand?.('burn-curve') }}
       kickoffPriority="p1"
+      onInsightExpand={onExpand ? () => onExpand('burn-curve') : undefined}
     />
   )
 }

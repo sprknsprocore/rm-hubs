@@ -4,9 +4,10 @@ import type { ZeroActivityAlert } from '../../../hooks/useHubData'
 
 interface ZeroActivityCardProps {
   data: ZeroActivityAlert[]
+  onExpand?: (insightId: string) => void
 }
 
-export default function ZeroActivityCard({ data }: ZeroActivityCardProps) {
+export default function ZeroActivityCard({ data, onExpand }: ZeroActivityCardProps) {
   const totalDailyCost = data.reduce((sum, a) => sum + a.dailyCost, 0)
 
   const signal = (
@@ -66,8 +67,9 @@ export default function ZeroActivityCard({ data }: ZeroActivityCardProps) {
       title="Zero Activity Alert"
       signal={signal}
       context={context}
-      kickoff={{ label: 'Off-Rent', onClick: () => {} }}
+      kickoff={{ label: 'Off-Rent', onClick: () => onExpand?.('zero-activity') }}
       kickoffPriority="p1"
+      onInsightExpand={onExpand ? () => onExpand('zero-activity') : undefined}
     />
   )
 }

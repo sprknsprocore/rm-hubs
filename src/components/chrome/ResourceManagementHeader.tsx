@@ -1,5 +1,5 @@
 import { useRef, useEffect } from 'react'
-import { Search, Bell, ListChecks } from 'lucide-react'
+import { Search, Bell, Sparkles, X } from 'lucide-react'
 import { motion } from 'framer-motion'
 import type { ProjectData } from '../../types/lem'
 import { SPRING_BOUNCE } from '../../utils/motion'
@@ -8,13 +8,10 @@ export interface ResourceManagementHeaderProps {
   /** NL filter query – bound to Command-K search */
   nlQuery: string
   onNlQueryChange: (value: string) => void
-  /** Open the Action Drawer */
-  onOpenActions?: () => void
-  /** Whether the Action Drawer is open (for toggle) */
-  actionsPanelOpen: boolean
-  onToggleActions: () => void
-  /** Show Actions bar and drawer toggle (e.g. hidden on Timesheets) */
-  showActionsBar: boolean
+  /** Whether the Insights sidebar is open */
+  insightsPanelOpen: boolean
+  /** Close the Insights sidebar */
+  onCloseInsights: () => void
   /** Project data for KPIs when in project view */
   projectData: ProjectData | null
 }
@@ -22,10 +19,8 @@ export interface ResourceManagementHeaderProps {
 export default function ResourceManagementHeader({
   nlQuery,
   onNlQueryChange,
-  onOpenActions,
-  actionsPanelOpen,
-  onToggleActions,
-  showActionsBar,
+  insightsPanelOpen,
+  onCloseInsights,
   projectData,
 }: ResourceManagementHeaderProps) {
   const searchInputRef = useRef<HTMLInputElement>(null)
@@ -121,24 +116,25 @@ export default function ResourceManagementHeader({
         >
           <Bell className="h-4 w-4" />
         </button>
-        {showActionsBar && (
+        {insightsPanelOpen && (
           <motion.button
             type="button"
-            onClick={actionsPanelOpen ? onToggleActions : onOpenActions}
+            onClick={onCloseInsights}
             className="inline-flex items-center gap-1.5 rounded-md border px-2.5 py-1.5 text-xs font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-black/10"
             style={{
               height: '35px',
-              backgroundColor: actionsPanelOpen ? 'var(--figma-primary-selected)' : 'var(--figma-cta-p2-bg)',
-              color: actionsPanelOpen ? 'var(--figma-primary-main)' : 'var(--figma-cta-p2-text)',
+              backgroundColor: 'var(--figma-primary-selected)',
+              color: 'var(--figma-primary-main)',
               borderColor: 'var(--figma-cta-p2-border)',
             }}
             whileTap={{ scale: 0.98 }}
             transition={SPRING_BOUNCE}
-            aria-label={actionsPanelOpen ? 'Close Actions panel' : 'Open Actions panel'}
-            data-tour="next-actions"
+            aria-label="Close Insights panel"
+            data-tour="insights-active"
           >
-            <ListChecks className="h-3.5 w-3.5" />
-            Next actions
+            <Sparkles className="h-3.5 w-3.5" />
+            Insights
+            <X className="h-3 w-3" />
           </motion.button>
         )}
       </div>

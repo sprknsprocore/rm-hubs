@@ -4,9 +4,10 @@ import type { CapacityDemandData } from '../../../hooks/useHubData'
 
 interface CapacityDemandCardProps {
   data: CapacityDemandData
+  onExpand?: (insightId: string) => void
 }
 
-export default function CapacityDemandCard({ data }: CapacityDemandCardProps) {
+export default function CapacityDemandCard({ data, onExpand }: CapacityDemandCardProps) {
   const overCapacity = data.bars.some((b) => b.demand > data.capacityLine)
 
   const signal = (
@@ -72,8 +73,9 @@ export default function CapacityDemandCard({ data }: CapacityDemandCardProps) {
       title="Capacity vs. Demand"
       signal={signal}
       context={context}
-      kickoff={{ label: 'View Hiring Plan', onClick: () => {} }}
+      kickoff={{ label: 'View Hiring Plan', onClick: () => onExpand?.('capacity-demand') }}
       kickoffPriority="p2"
+      onInsightExpand={onExpand ? () => onExpand('capacity-demand') : undefined}
     />
   )
 }

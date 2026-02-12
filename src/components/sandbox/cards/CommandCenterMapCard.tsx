@@ -26,9 +26,10 @@ const idleIcon = new L.DivIcon({
 
 interface CommandCenterMapCardProps {
   data: EquipmentPin[]
+  onExpand?: (insightId: string) => void
 }
 
-export default function CommandCenterMapCard({ data }: CommandCenterMapCardProps) {
+export default function CommandCenterMapCard({ data, onExpand }: CommandCenterMapCardProps) {
   const [idleOnly, setIdleOnly] = useState(false)
 
   const idleCount = useMemo(() => data.filter((p) => p.status === 'idle').length, [data])
@@ -92,8 +93,9 @@ export default function CommandCenterMapCard({ data }: CommandCenterMapCardProps
       title="Command Center Map"
       signal={signal}
       context={context}
-      kickoff={{ label: 'Off-Rent Idle', onClick: () => {} }}
+      kickoff={{ label: 'Off-Rent Idle', onClick: () => onExpand?.('command-center') }}
       kickoffPriority="p2"
+      onInsightExpand={onExpand ? () => onExpand('command-center') : undefined}
     />
   )
 }

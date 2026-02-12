@@ -14,9 +14,10 @@ import type { UtilizationTrendPoint } from '../../../hooks/useHubData'
 
 interface UtilizationTrendCardProps {
   data: UtilizationTrendPoint[]
+  onExpand?: (insightId: string) => void
 }
 
-export default function UtilizationTrendCard({ data }: UtilizationTrendCardProps) {
+export default function UtilizationTrendCard({ data, onExpand }: UtilizationTrendCardProps) {
   const latest = data[data.length - 1]
   const avgActual = Math.round(data.reduce((s, d) => s + d.actual, 0) / data.length)
   const underperforming = latest ? latest.actual < latest.scheduled : false
@@ -110,8 +111,9 @@ export default function UtilizationTrendCard({ data }: UtilizationTrendCardProps
       title="Equipment Utilization Rate"
       signal={signal}
       context={context}
-      kickoff={{ label: 'Optimize Fleet', onClick: () => {} }}
+      kickoff={{ label: 'Optimize Fleet', onClick: () => onExpand?.('utilization-trend') }}
       kickoffPriority="p2"
+      onInsightExpand={onExpand ? () => onExpand('utilization-trend') : undefined}
     />
   )
 }

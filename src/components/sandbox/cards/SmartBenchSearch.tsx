@@ -5,6 +5,7 @@ import type { BenchWorker } from '../../../hooks/useHubData'
 
 interface SmartBenchSearchProps {
   data: BenchWorker[]
+  onExpand?: (insightId: string) => void
 }
 
 function initials(name: string): string {
@@ -16,7 +17,7 @@ function initials(name: string): string {
     .toUpperCase()
 }
 
-export default function SmartBenchSearch({ data }: SmartBenchSearchProps) {
+export default function SmartBenchSearch({ data, onExpand }: SmartBenchSearchProps) {
   const [query, setQuery] = useState('')
 
   const filtered = useMemo(() => {
@@ -133,8 +134,9 @@ export default function SmartBenchSearch({ data }: SmartBenchSearchProps) {
       title="Smart Bench"
       signal={signal}
       context={context}
-      kickoff={{ label: 'Dispatch', onClick: () => {} }}
+      kickoff={{ label: 'Dispatch', onClick: () => onExpand?.('smart-bench') }}
       kickoffPriority="p2"
+      onInsightExpand={onExpand ? () => onExpand('smart-bench') : undefined}
     />
   )
 }

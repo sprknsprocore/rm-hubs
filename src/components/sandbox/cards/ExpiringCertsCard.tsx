@@ -4,9 +4,10 @@ import type { ExpiringCert } from '../../../hooks/useHubData'
 
 interface ExpiringCertsCardProps {
   data: ExpiringCert[]
+  onExpand?: (insightId: string) => void
 }
 
-export default function ExpiringCertsCard({ data }: ExpiringCertsCardProps) {
+export default function ExpiringCertsCard({ data, onExpand }: ExpiringCertsCardProps) {
   const signal = (
     <div className="flex flex-col gap-3">
       <div className="flex items-center gap-3">
@@ -67,8 +68,9 @@ export default function ExpiringCertsCard({ data }: ExpiringCertsCardProps) {
       title="Expiring Certifications"
       signal={signal}
       context={context}
-      kickoff={{ label: 'Assign Training', onClick: () => {} }}
+      kickoff={{ label: 'Assign Training', onClick: () => onExpand?.('expiring-certs') }}
       kickoffPriority="p1"
+      onInsightExpand={onExpand ? () => onExpand('expiring-certs') : undefined}
     />
   )
 }

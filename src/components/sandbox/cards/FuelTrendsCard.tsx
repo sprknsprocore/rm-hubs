@@ -13,9 +13,10 @@ import type { FuelTrendPoint } from '../../../hooks/useHubData'
 
 interface FuelTrendsCardProps {
   data: FuelTrendPoint[]
+  onExpand?: (insightId: string) => void
 }
 
-export default function FuelTrendsCard({ data }: FuelTrendsCardProps) {
+export default function FuelTrendsCard({ data, onExpand }: FuelTrendsCardProps) {
   const totalGallons = data.reduce((s, d) => s + d.gallons, 0)
   const totalCost = data.reduce((s, d) => s + d.cost, 0)
   const avgCostPerGal = totalCost / totalGallons
@@ -96,8 +97,9 @@ export default function FuelTrendsCard({ data }: FuelTrendsCardProps) {
       title="Fuel Consumption Trends"
       signal={signal}
       context={context}
-      kickoff={{ label: 'View Fleet Costs', onClick: () => {} }}
+      kickoff={{ label: 'View Fleet Costs', onClick: () => onExpand?.('fuel-trends') }}
       kickoffPriority="p3"
+      onInsightExpand={onExpand ? () => onExpand('fuel-trends') : undefined}
     />
   )
 }

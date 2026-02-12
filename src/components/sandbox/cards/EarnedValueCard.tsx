@@ -14,6 +14,7 @@ import type { EarnedValueData } from '../../../hooks/useHubData'
 
 interface EarnedValueCardProps {
   data: EarnedValueData
+  onExpand?: (insightId: string) => void
 }
 
 type EvTab = 'all' | 'labor' | 'materials' | 'equipment'
@@ -47,7 +48,7 @@ function StatusBadge({ status }: { status: EarnedValueData['billingStatus'] }) {
   )
 }
 
-export default function EarnedValueCard({ data }: EarnedValueCardProps) {
+export default function EarnedValueCard({ data, onExpand }: EarnedValueCardProps) {
   const [tab, setTab] = useState<EvTab>('all')
 
   // Progress bar segments (proportional to totalBudget)
@@ -215,8 +216,9 @@ export default function EarnedValueCard({ data }: EarnedValueCardProps) {
       title="Earned Value"
       signal={signal}
       context={context}
-      kickoff={{ label: 'Review Forecast', onClick: () => {} }}
+      kickoff={{ label: 'Review Forecast', onClick: () => onExpand?.('earned-value') }}
       kickoffPriority="p1"
+      onInsightExpand={onExpand ? () => onExpand('earned-value') : undefined}
     />
   )
 }

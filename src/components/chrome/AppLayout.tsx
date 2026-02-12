@@ -1,16 +1,16 @@
-import { useState, useMemo, useEffect, useRef } from 'react'
+import { useState, useMemo, useEffect, useRef, useCallback } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import LeftNav, { type Domain } from './LeftNav'
 import TopRail from './TopRail'
 import ResourceManagementHeader from './ResourceManagementHeader'
-import NextBestActionDrawer from './NextBestActionDrawer'
+import InsightsSidebar from './InsightsSidebar'
 import QuickCreateFAB from './QuickCreateFAB'
 import HeavyCivilHub from '../personas/HeavyCivil/HeavyCivilHub'
 import SpecialtyHub from '../personas/Specialty/SpecialtyHub'
 import PlannerHub from '../personas/Planner/PlannerHub'
 import UnifiedDomainGrid, { type GridDomain } from '../domains/UnifiedDomainGrid'
 import type { Persona } from '../../types/lem'
-import { getNextBestActions, getUnifiedLemPayload, getProjectList, getCompanyList } from '../../api/mockLemApi'
+import { getUnifiedLemPayload, getProjectList, getCompanyList } from '../../api/mockLemApi'
 
 const VALID_DOMAIN = new Set<Domain>(['hub', 'timesheets', 'materials', 'resourcePlanning', 'equipment'])
 
@@ -27,12 +27,13 @@ export default function AppLayout() {
   const [persona, setPersona] = useState<Persona>('heavyCivil')
   const domain = domainFromSearchParams(searchParams)
   const [nlQuery, setNlQuery] = useState('')
-  const [actionsPanelOpen, setActionsPanelOpen] = useState(false)
+  const [selectedInsightId, setSelectedInsightId] = useState<string | null>(null)
   const [navExpanded, setNavExpanded] = useState(true)
   const [selectedCompanyId, setSelectedCompanyId] = useState('miller-design')
   const [isTourActive, setIsTourActive] = useState(false)
   const tourTriggeredRef = useRef(false)
-  const nextBestActions = getNextBestActions()
+  const handleExpand = useCallback((insightId: string) => setSelectedInsightId(insightId), [])
+  const insightsPanelOpen = selectedInsightId !== null
   const projectList = useMemo(() => getProjectList(), [])
   const companyList = useMemo(() => getCompanyList(), [])
   const currentWorkspaceLabel = companyList.find((c) => c.id === selectedCompanyId)?.name ?? 'Miller Design'
@@ -53,7 +54,6 @@ export default function AppLayout() {
 
   const showHub = domain === 'hub'
   const showUnifiedGrid = !showHub
-  const showActionsBar = domain !== 'timesheets'
   const showResourceManagementHeader = domain === 'hub'
 
   useEffect(() => {
@@ -103,10 +103,8 @@ export default function AppLayout() {
               <ResourceManagementHeader
                 nlQuery={nlQuery}
                 onNlQueryChange={setNlQuery}
-                onOpenActions={showActionsBar && !actionsPanelOpen ? () => setActionsPanelOpen(true) : undefined}
-                actionsPanelOpen={actionsPanelOpen}
-                onToggleActions={() => setActionsPanelOpen((prev) => !prev)}
-                showActionsBar={showActionsBar}
+                insightsPanelOpen={insightsPanelOpen}
+                onCloseInsights={() => setSelectedInsightId(null)}
                 projectData={null}
               />
             )}
@@ -124,9 +122,9 @@ export default function AppLayout() {
                 <div className="pb-4 pt-4 md:pb-6 md:pt-5" data-tour="hub-content">
                   {showHub && (
                     <>
-                      {persona === 'heavyCivil' && <HeavyCivilHub nlFilter={nlFilter} />}
-                      {persona === 'specialty' && <SpecialtyHub nlFilter={nlFilter} />}
-                      {persona === 'planner' && <PlannerHub nlFilter={nlFilter} />}
+                      {persona === 'heavyCivil' && <HeavyCivilHub nlFilter={nlFilter} onExpand={handleExpand} />}
+                      {persona === 'specialty' && <SpecialtyHub nlFilter={nlFilter} onExpand={handleExpand} />}
+                      {persona === 'planner' && <PlannerHub nlFilter={nlFilter} onExpand={handleExpand} />}
                     </>
                   )}
                   {showUnifiedGrid && (
@@ -139,7 +137,7 @@ export default function AppLayout() {
               </div>
             )}
           </main>
-          {showActionsBar && actionsPanelOpen && (
+          {insightsPanelOpen && (
             <div
               className="hidden shrink-0 md:block"
               style={{ width: 'var(--figma-drawer-width)' }}
@@ -147,16 +145,12 @@ export default function AppLayout() {
             />
           )}
         </div>
-        {showActionsBar && (
-          <NextBestActionDrawer
-            items={nextBestActions}
-            open={actionsPanelOpen}
-            onToggle={() => setActionsPanelOpen((prev) => !prev)}
-            hideTriggerWhenClosed
-          />
-        )}
+        <InsightsSidebar
+          selectedInsightId={selectedInsightId}
+          onClose={() => setSelectedInsightId(null)}
+        />
       </div>
-      <QuickCreateFAB persona={persona} actionsDrawerOpen={showActionsBar && actionsPanelOpen} />
+      <QuickCreateFAB persona={persona} actionsDrawerOpen={insightsPanelOpen} />
     </div>
   )
 }

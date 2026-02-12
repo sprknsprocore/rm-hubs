@@ -12,9 +12,10 @@ import type { AllocationPlanPoint } from '../../../hooks/useHubData'
 
 interface AllocationPlanCardProps {
   data: AllocationPlanPoint[]
+  onExpand?: (insightId: string) => void
 }
 
-export default function AllocationPlanCard({ data }: AllocationPlanCardProps) {
+export default function AllocationPlanCard({ data, onExpand }: AllocationPlanCardProps) {
   const latest = data[data.length - 1]
   const gap = latest ? latest.requested - latest.assigned : 0
 
@@ -67,8 +68,9 @@ export default function AllocationPlanCard({ data }: AllocationPlanCardProps) {
       title="Allocation Plan"
       signal={signal}
       context={context}
-      kickoff={{ label: 'Request Resources', onClick: () => {} }}
+      kickoff={{ label: 'Request Resources', onClick: () => onExpand?.('allocation-plan') }}
       kickoffPriority="p2"
+      onInsightExpand={onExpand ? () => onExpand('allocation-plan') : undefined}
     />
   )
 }

@@ -8,9 +8,10 @@ interface BidSimulatorToggleProps {
     opportunities: BidOpportunity[]
     capacityBaselineFTE: number
   }
+  onExpand?: (insightId: string) => void
 }
 
-export default function BidSimulatorToggle({ data }: BidSimulatorToggleProps) {
+export default function BidSimulatorToggle({ data, onExpand }: BidSimulatorToggleProps) {
   const [opps, setOpps] = useState(data.opportunities)
 
   const toggleWon = (id: string) => {
@@ -105,8 +106,9 @@ export default function BidSimulatorToggle({ data }: BidSimulatorToggleProps) {
       title="Bid Simulator"
       signal={signal}
       context={context}
-      kickoff={{ label: 'Model Capacity', onClick: () => {} }}
+      kickoff={{ label: 'Model Capacity', onClick: () => onExpand?.('bid-simulator') }}
       kickoffPriority="p2"
+      onInsightExpand={onExpand ? () => onExpand('bid-simulator') : undefined}
     />
   )
 }

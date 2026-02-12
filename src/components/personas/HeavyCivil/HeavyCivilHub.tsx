@@ -11,46 +11,47 @@ import type { NlFilterResult } from '../../../types/lem'
 
 interface HeavyCivilHubProps {
   nlFilter?: NlFilterResult | null
+  onExpand?: (insightId: string) => void
 }
 
-export default function HeavyCivilHub(_props: HeavyCivilHubProps) {
+export default function HeavyCivilHub({ onExpand }: HeavyCivilHubProps) {
   const data = useHubData()
 
   return (
     <BentoGrid columns={2} rows="hero-action">
       <BentoCell span={2}>
         <div data-tour="card-portfolio-heatmap" className="flex min-h-0 flex-1 flex-col">
-          <PortfolioHeatmap data={data.portfolioHealth} />
+          <PortfolioHeatmap data={data.portfolioHealth} onExpand={onExpand} />
         </div>
       </BentoCell>
       <BentoCell span={2}>
         <div data-tour="card-zero-activity" className="flex min-h-0 flex-1 flex-col">
-          <ZeroActivityCard data={data.zeroActivityAlerts} />
+          <ZeroActivityCard data={data.zeroActivityAlerts} onExpand={onExpand} />
         </div>
       </BentoCell>
       <BentoCell span={2}>
         <div data-tour="card-command-center" className="flex min-h-0 flex-1 flex-col">
-          <CommandCenterMapCard data={data.commandCenterPins} />
+          <CommandCenterMapCard data={data.commandCenterPins} onExpand={onExpand} />
         </div>
       </BentoCell>
       <BentoCell>
         <div data-tour="card-equipment-utilization" className="flex min-h-0 flex-1 flex-col">
-          <EquipmentUtilizationCard data={data.equipmentUtilization} />
+          <EquipmentUtilizationCard data={data.equipmentUtilization} onExpand={onExpand} />
         </div>
       </BentoCell>
       <BentoCell>
         <div data-tour="card-utilization-trend" className="flex min-h-0 flex-1 flex-col">
-          <UtilizationTrendCard data={data.utilizationTrend} />
+          <UtilizationTrendCard data={data.utilizationTrend} onExpand={onExpand} />
         </div>
       </BentoCell>
       <BentoCell>
         <div data-tour="card-daily-huddle" className="flex min-h-0 flex-1 flex-col">
-          <DailyHuddleRecapCard data={data.dailyHuddle} />
+          <DailyHuddleRecapCard data={data.dailyHuddle} onExpand={onExpand} />
         </div>
       </BentoCell>
       <BentoCell>
         <div data-tour="card-fuel-trends" className="flex min-h-0 flex-1 flex-col">
-          <FuelTrendsCard data={data.fuelTrends} />
+          <FuelTrendsCard data={data.fuelTrends} onExpand={onExpand} />
         </div>
       </BentoCell>
     </BentoGrid>

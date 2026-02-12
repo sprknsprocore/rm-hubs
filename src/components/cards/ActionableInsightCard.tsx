@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react'
 import { motion } from 'framer-motion'
+import { Sparkles } from 'lucide-react'
 
 export interface KickoffConfig {
   label: string
@@ -23,6 +24,8 @@ interface ActionableInsightCardProps {
   /** When set, the title is wrapped in motion for shared layout transition (e.g. reconciliation-workspace-title). */
   titleLayoutId?: string
   secondaryAction?: SecondaryActionConfig
+  /** When provided, renders a Sparkles "Insights" button in the card header to open the Insights sidebar. */
+  onInsightExpand?: () => void
   className?: string
 }
 
@@ -52,13 +55,16 @@ export default function ActionableInsightCard({
   title,
   titleLayoutId,
   secondaryAction,
+  onInsightExpand,
   className = '',
 }: ActionableInsightCardProps) {
+  const showHeader = !!(title || secondaryAction || onInsightExpand)
+
   return (
     <article
       className={`figma-card-base group relative flex h-full min-h-0 flex-col overflow-hidden ${className}`}
     >
-      {(title || secondaryAction) && (
+      {showHeader && (
         <div
           className="figma-card-border relative flex shrink-0 items-center justify-between gap-2 border-b px-3 pt-3 pb-2.5 md:px-4 md:pt-4 md:pb-3"
         >
@@ -82,18 +88,32 @@ export default function ActionableInsightCard({
           ) : (
             <span className="flex-1" />
           )}
-          {secondaryAction && (
-            <button
-              type="button"
-              onClick={secondaryAction.onClick}
-              className="rounded-lg p-2 transition-colors hover:bg-black/[0.04] focus:outline-none focus:ring-2 focus:ring-black/10 focus:ring-offset-2"
-              style={{ color: 'var(--figma-text-secondary)' }}
-              aria-label={secondaryAction.label}
-              title={secondaryAction.label}
-            >
-              {secondaryAction.icon}
-            </button>
-          )}
+          <div className="flex items-center gap-0.5">
+            {onInsightExpand && (
+              <button
+                type="button"
+                onClick={onInsightExpand}
+                className="rounded-md p-1.5 opacity-0 transition-all duration-200 group-hover:opacity-100 hover:bg-black/[0.04] focus:opacity-100 focus:outline-none focus:ring-2 focus:ring-black/10 focus:ring-offset-1"
+                style={{ color: 'var(--figma-text-disabled)' }}
+                aria-label="View Insights"
+                title="View Insights"
+              >
+                <Sparkles className="h-3.5 w-3.5" />
+              </button>
+            )}
+            {secondaryAction && (
+              <button
+                type="button"
+                onClick={secondaryAction.onClick}
+                className="rounded-lg p-2 transition-colors hover:bg-black/[0.04] focus:outline-none focus:ring-2 focus:ring-black/10 focus:ring-offset-2"
+                style={{ color: 'var(--figma-text-secondary)' }}
+                aria-label={secondaryAction.label}
+                title={secondaryAction.label}
+              >
+                {secondaryAction.icon}
+              </button>
+            )}
+          </div>
         </div>
       )}
       <div className="relative flex min-h-0 flex-1 flex-col px-3 pb-3 pt-3 md:px-4 md:pb-4 md:pt-4">

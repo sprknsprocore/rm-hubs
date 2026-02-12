@@ -3,6 +3,7 @@ import type { PortfolioProject } from '../../../hooks/useHubData'
 
 interface PortfolioHeatmapProps {
   data: PortfolioProject[]
+  onExpand?: (insightId: string) => void
 }
 
 const STATUS_STYLES: Record<string, { bg: string; text: string; dot: string }> = {
@@ -23,7 +24,7 @@ const STATUS_STYLES: Record<string, { bg: string; text: string; dot: string }> =
   },
 }
 
-export default function PortfolioHeatmap({ data }: PortfolioHeatmapProps) {
+export default function PortfolioHeatmap({ data, onExpand }: PortfolioHeatmapProps) {
   const signal = (
     <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
       {data.map((project) => {
@@ -72,8 +73,9 @@ export default function PortfolioHeatmap({ data }: PortfolioHeatmapProps) {
       title="Portfolio Health Heatmap"
       signal={signal}
       context={context}
-      kickoff={{ label: 'Drill into Project', onClick: () => {} }}
+      kickoff={{ label: 'Drill into Project', onClick: () => onExpand?.('portfolio-heatmap') }}
       kickoffPriority="p2"
+      onInsightExpand={onExpand ? () => onExpand('portfolio-heatmap') : undefined}
     />
   )
 }

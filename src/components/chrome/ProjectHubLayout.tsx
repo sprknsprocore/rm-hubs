@@ -1,14 +1,13 @@
-import { useState, useMemo, useEffect, useRef } from 'react'
+import { useState, useMemo, useEffect, useRef, useCallback } from 'react'
 import { useParams, useNavigate, useSearchParams } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import LeftNav from './LeftNav'
 import TopRail from './TopRail'
 import { type Domain } from './LeftNav'
 import ResourceManagementHeader from './ResourceManagementHeader'
-import NextBestActionDrawer from './NextBestActionDrawer'
+import InsightsSidebar from './InsightsSidebar'
 import ProjectHub from '../personas/ProjectHub/ProjectHub'
 import type { Persona } from '../../types/lem'
-import type { NextBestAction } from '../../types/lem'
 import { getProjectList, getProjectData, getUnifiedLemPayload } from '../../api/mockLemApi'
 import { parseNlQuery } from '../../api/nlSearch'
 import { runDashboardTour, stopDashboardTour } from '../../tour/dashboardTour'
@@ -26,7 +25,7 @@ export default function ProjectHubLayout() {
   const [nlQuery, setNlQuery] = useState('')
   const [persona, setPersona] = useState<Persona>('heavyCivil')
   const [navExpanded, setNavExpanded] = useState(true)
-  const [actionsPanelOpen, setActionsPanelOpen] = useState(false)
+  const [selectedInsightId, setSelectedInsightId] = useState<string | null>(null)
   const [trueUpDrawerOpen, setTrueUpDrawerOpen] = useState(false)
   const [selectedCostCodeRowId, setSelectedCostCodeRowId] = useState<string | null>(null)
   const [isTourActive, setIsTourActive] = useState(false)
@@ -46,9 +45,9 @@ export default function ProjectHubLayout() {
     else navigate('/')
   }
 
-  const showActionsBar = domain !== 'timesheets'
   const showResourceManagementHeader = domain === 'hub'
-  const redFlagsAsActions: NextBestAction[] = projectData?.redFlags ?? []
+  const handleExpand = useCallback((insightId: string) => setSelectedInsightId(insightId), [])
+  const insightsPanelOpen = selectedInsightId !== null
 
   useEffect(() => {
     if (tourTriggeredRef.current || !effectiveProjectId || !projectData) return
@@ -106,10 +105,8 @@ export default function ProjectHubLayout() {
               <ResourceManagementHeader
                 nlQuery={nlQuery}
                 onNlQueryChange={setNlQuery}
-                onOpenActions={showActionsBar && !actionsPanelOpen ? () => setActionsPanelOpen(true) : undefined}
-                actionsPanelOpen={actionsPanelOpen}
-                onToggleActions={() => setActionsPanelOpen((prev) => !prev)}
-                showActionsBar={showActionsBar}
+                insightsPanelOpen={insightsPanelOpen}
+                onCloseInsights={() => setSelectedInsightId(null)}
                 projectData={projectData}
               />
             )}
@@ -150,7 +147,7 @@ export default function ProjectHubLayout() {
               </div>
             </div>
           </main>
-          {showActionsBar && actionsPanelOpen && (
+          {insightsPanelOpen && (
             <div
               className="hidden shrink-0 md:block"
               style={{ width: 'var(--figma-drawer-width)' }}
@@ -158,14 +155,10 @@ export default function ProjectHubLayout() {
             />
           )}
         </div>
-        {showActionsBar && (
-          <NextBestActionDrawer
-            items={redFlagsAsActions}
-            open={actionsPanelOpen}
-            onToggle={() => setActionsPanelOpen((prev) => !prev)}
-            hideTriggerWhenClosed
-          />
-        )}
+        <InsightsSidebar
+          selectedInsightId={selectedInsightId}
+          onClose={() => setSelectedInsightId(null)}
+        />
       </div>
     </div>
   )

@@ -5,9 +5,10 @@ import { TrendingDown, TrendingUp, Minus } from 'lucide-react'
 
 interface ProjectedMarginCardProps {
   data: ProjectedMarginData
+  onExpand?: (insightId: string) => void
 }
 
-export default function ProjectedMarginCard({ data }: ProjectedMarginCardProps) {
+export default function ProjectedMarginCard({ data, onExpand }: ProjectedMarginCardProps) {
   const TrendIcon = data.trend === 'down' ? TrendingDown : data.trend === 'up' ? TrendingUp : Minus
   const trendColor =
     data.trend === 'down'
@@ -70,8 +71,9 @@ export default function ProjectedMarginCard({ data }: ProjectedMarginCardProps) 
       title="Projected Margin at Completion"
       signal={signal}
       context={context}
-      kickoff={{ label: 'Adjust Estimate', onClick: () => {} }}
+      kickoff={{ label: 'Adjust Estimate', onClick: () => onExpand?.('projected-margin') }}
       kickoffPriority="p2"
+      onInsightExpand={onExpand ? () => onExpand('projected-margin') : undefined}
     />
   )
 }

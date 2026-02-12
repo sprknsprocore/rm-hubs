@@ -4,9 +4,10 @@ import type { EquipmentUtilizationData } from '../../../hooks/useHubData'
 
 interface EquipmentUtilizationCardProps {
   data: EquipmentUtilizationData
+  onExpand?: (insightId: string) => void
 }
 
-export default function EquipmentUtilizationCard({ data }: EquipmentUtilizationCardProps) {
+export default function EquipmentUtilizationCard({ data, onExpand }: EquipmentUtilizationCardProps) {
   const { engineOnHours, onSiteHours, utilizationPct } = data
   const idlePct = 100 - utilizationPct
 
@@ -77,8 +78,9 @@ export default function EquipmentUtilizationCard({ data }: EquipmentUtilizationC
       title="Equipment Utilization"
       signal={signal}
       context={context}
-      kickoff={{ label: 'Review Fleet', onClick: () => {} }}
+      kickoff={{ label: 'Review Fleet', onClick: () => onExpand?.('equipment-utilization') }}
       kickoffPriority="p2"
+      onInsightExpand={onExpand ? () => onExpand('equipment-utilization') : undefined}
     />
   )
 }
