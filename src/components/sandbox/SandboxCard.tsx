@@ -1,12 +1,12 @@
 import type { ReactNode } from 'react'
 import { motion } from 'framer-motion'
-import type { SandboxPersona } from '../../hooks/useHubData'
+import type { Persona } from '../../hooks/useHubData'
 import type { SandboxCardId } from './personaRelevance'
 import { isRelevant, isHero } from './personaRelevance'
 
 interface SandboxCardProps {
   cardId: SandboxCardId
-  persona: SandboxPersona
+  persona: Persona
   children: ReactNode
   className?: string
   /** For BentoCell span behavior */

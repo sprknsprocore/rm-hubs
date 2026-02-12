@@ -6,12 +6,12 @@ import WeatherRiskCard from '../cards/WeatherRiskCard'
 import PredecessorDelayCard from '../cards/PredecessorDelayCard'
 import CriticalMaintenanceCard from '../cards/CriticalMaintenanceCard'
 import MilestoneBufferCard from '../cards/MilestoneBufferCard'
-import type { HubData, SandboxPersona } from '../../../hooks/useHubData'
+import type { HubData, Persona } from '../../../hooks/useHubData'
 import { EASE_OUT_EXPO } from '../../../utils/motion'
 
 interface VariableLayerProps {
   data: HubData
-  persona: SandboxPersona
+  persona: Persona
 }
 
 /** Small toggle switch for demo controls */

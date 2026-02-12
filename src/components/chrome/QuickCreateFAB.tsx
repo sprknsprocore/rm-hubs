@@ -52,7 +52,7 @@ const HEAVY_CIVIL_OPTIONS: FABOption[] = [
 ]
 
 function getOptionsForPersona(persona: Persona): FABOption[] {
-  if (persona === 'geco') return SPECIALTY_OPTIONS
+  if (persona === 'specialty') return SPECIALTY_OPTIONS
   return HEAVY_CIVIL_OPTIONS
 }
 

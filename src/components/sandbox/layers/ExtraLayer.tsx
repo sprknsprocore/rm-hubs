@@ -8,11 +8,11 @@ import HistoricalBenchmarkCard from '../cards/HistoricalBenchmarkCard'
 import ScenarioPlanningCard from '../cards/ScenarioPlanningCard'
 import FuelTrendsCard from '../cards/FuelTrendsCard'
 import GoldenThreadTimelineCard from '../cards/GoldenThreadTimelineCard'
-import type { HubData, SandboxPersona } from '../../../hooks/useHubData'
+import type { HubData, Persona } from '../../../hooks/useHubData'
 
 interface ExtraLayerProps {
   data: HubData
-  persona: SandboxPersona
+  persona: Persona
 }
 
 export default function ExtraLayer({ data, persona }: ExtraLayerProps) {

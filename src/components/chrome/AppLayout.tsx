@@ -6,8 +6,8 @@ import ResourceManagementHeader from './ResourceManagementHeader'
 import NextBestActionDrawer from './NextBestActionDrawer'
 import QuickCreateFAB from './QuickCreateFAB'
 import HeavyCivilHub from '../personas/HeavyCivil/HeavyCivilHub'
-import GecoHub from '../personas/Geco/GecoHub'
-import EngineeringHub from '../personas/EngineeringPlanner/EngineeringHub'
+import SpecialtyHub from '../personas/Specialty/SpecialtyHub'
+import PlannerHub from '../personas/Planner/PlannerHub'
 import UnifiedDomainGrid, { type GridDomain } from '../domains/UnifiedDomainGrid'
 import type { Persona } from '../../types/lem'
 import { getNextBestActions, getUnifiedLemPayload, getProjectList, getCompanyList } from '../../api/mockLemApi'
@@ -125,8 +125,8 @@ export default function AppLayout() {
                   {showHub && (
                     <>
                       {persona === 'heavyCivil' && <HeavyCivilHub nlFilter={nlFilter} />}
-                      {persona === 'geco' && <GecoHub nlFilter={nlFilter} />}
-                      {persona === 'engineering' && <EngineeringHub nlFilter={nlFilter} />}
+                      {persona === 'specialty' && <SpecialtyHub nlFilter={nlFilter} />}
+                      {persona === 'planner' && <PlannerHub nlFilter={nlFilter} />}
                     </>
                   )}
                   {showUnifiedGrid && (

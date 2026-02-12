@@ -1,14 +1,14 @@
-import type { SandboxPersona } from '../../hooks/useHubData'
+import type { Persona } from '../../hooks/useHubData'
 
 interface SandboxPersonaToggleProps {
-  value: SandboxPersona
-  onChange: (p: SandboxPersona) => void
+  value: Persona
+  onChange: (p: Persona) => void
 }
 
-const OPTIONS: { value: SandboxPersona; label: string }[] = [
-  { value: 'heavyCivil', label: 'Heavy Civil' },
-  { value: 'specialty', label: 'Specialty' },
-  { value: 'planner', label: 'Planner' },
+const OPTIONS: { value: Persona; label: string }[] = [
+  { value: 'heavyCivil', label: 'Heavy Civil PM' },
+  { value: 'specialty', label: 'Specialty Contractor' },
+  { value: 'planner', label: 'Engineering Planner' },
 ]
 
 export default function SandboxPersonaToggle({ value, onChange }: SandboxPersonaToggleProps) {

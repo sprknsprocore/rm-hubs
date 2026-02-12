@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useHubData, type SandboxPersona } from '../../hooks/useHubData'
+import { useHubData, type Persona } from '../../hooks/useHubData'
 import SandboxPersonaToggle from './SandboxPersonaToggle'
 import EvergreenLayer from './layers/EvergreenLayer'
 import LemSpecificLayer from './layers/LemSpecificLayer'
@@ -8,7 +8,7 @@ import VariableLayer from './layers/VariableLayer'
 import ExtraLayer from './layers/ExtraLayer'
 
 export default function HubsSandboxLayout() {
-  const [persona, setPersona] = useState<SandboxPersona>('specialty')
+  const [persona, setPersona] = useState<Persona>('specialty')
   const data = useHubData()
 
   return (

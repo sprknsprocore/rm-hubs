@@ -13,11 +13,11 @@ import MilestoneTrackerCard from '../cards/MilestoneTrackerCard'
 import CapacityDemandCard from '../cards/CapacityDemandCard'
 import CycleTimeCard from '../cards/CycleTimeCard'
 import WbsHeatmapCard from '../cards/WbsHeatmapCard'
-import type { HubData, SandboxPersona } from '../../../hooks/useHubData'
+import type { HubData, Persona } from '../../../hooks/useHubData'
 
 interface LemSpecificLayerProps {
   data: HubData
-  persona: SandboxPersona
+  persona: Persona
 }
 
 export default function LemSpecificLayer({ data, persona }: LemSpecificLayerProps) {

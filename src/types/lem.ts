@@ -1,6 +1,6 @@
 // LEM domain types for Labor, Equipment, Materials
 
-export type Persona = 'heavyCivil' | 'geco' | 'engineering';
+export type Persona = 'heavyCivil' | 'specialty' | 'planner';
 
 // Next Best Action / Red Flags (right drawer)
 export type NextBestActionPriority = 'critical' | 'high' | 'medium' | 'low';
@@ -179,7 +179,7 @@ export interface MaintenanceRedFlag {
   severity?: 'high' | 'medium';
 }
 
-// Persona B – GECO (Labor)
+// Persona B – Specialty Contractor (Labor)
 export interface LaborSeriesPoint {
   weekId: string;
   value: number; // cumulative hours
@@ -201,7 +201,7 @@ export interface Milestone {
   atRiskReason?: string;
 }
 
-// Persona C – Engineering Planner
+// Persona C – Planner
 export interface Opportunity {
   id: string;
   name: string;
@@ -266,7 +266,7 @@ export interface LaborBurnCurvePayload {
   delayFlag: boolean;
 }
 
-export interface GecoPayload {
+export interface SpecialtyPayload {
   laborCurves: LaborCurves;
   laborBurnCurve: LaborBurnCurvePayload;
   milestones: Milestone[];
@@ -274,7 +274,7 @@ export interface GecoPayload {
   projectedOverrunHours?: number;
 }
 
-export interface EngineeringPayload {
+export interface PlannerPayload {
   capacityDemand: CapacityDemandPoint[];
   totalCapacity: number;
   capacityBenchmark?: number;
@@ -286,8 +286,8 @@ export interface EngineeringPayload {
 
 export type DashboardPayload =
   | { persona: 'heavyCivil'; data: HeavyCivilPayload }
-  | { persona: 'geco'; data: GecoPayload }
-  | { persona: 'engineering'; data: EngineeringPayload };
+  | { persona: 'specialty'; data: SpecialtyPayload }
+  | { persona: 'planner'; data: PlannerPayload };
 
 /** Result of NL bar query parsing for filtering/highlighting views. */
 export interface NlFilterResult {

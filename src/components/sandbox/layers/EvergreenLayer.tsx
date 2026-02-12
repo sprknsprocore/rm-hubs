@@ -11,11 +11,11 @@ import WorkforceCountCard from '../cards/WorkforceCountCard'
 import DailyHuddleRecapCard from '../cards/DailyHuddleRecapCard'
 import BurnCurveCard from '../cards/BurnCurveCard'
 import ProductionHealthCard from '../cards/ProductionHealthCard'
-import type { HubData, SandboxPersona } from '../../../hooks/useHubData'
+import type { HubData, Persona } from '../../../hooks/useHubData'
 
 interface EvergreenLayerProps {
   data: HubData
-  persona: SandboxPersona
+  persona: Persona
 }
 
 export default function EvergreenLayer({ data, persona }: EvergreenLayerProps) {

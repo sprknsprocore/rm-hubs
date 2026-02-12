@@ -1,4 +1,4 @@
-import type { SandboxPersona } from '../../hooks/useHubData'
+import type { Persona } from '../../hooks/useHubData'
 
 /** Card IDs used across the sandbox */
 export type SandboxCardId =
@@ -45,7 +45,7 @@ export type SandboxCardId =
   | 'goldenThreadTimeline'
 
 /** Which personas find each card relevant. undefined = relevant to all. */
-const RELEVANCE_MAP: Record<SandboxCardId, SandboxPersona[] | undefined> = {
+const RELEVANCE_MAP: Record<SandboxCardId, Persona[] | undefined> = {
   // Layer 1 – Evergreen: visible to all
   performanceGauge: undefined,
   budgetVsActual: undefined,
@@ -94,17 +94,17 @@ const RELEVANCE_MAP: Record<SandboxCardId, SandboxPersona[] | undefined> = {
 }
 
 /** Hero cards: get ring highlight when their persona is active */
-const HERO_MAP: Partial<Record<SandboxPersona, SandboxCardId[]>> = {
+const HERO_MAP: Partial<Record<Persona, SandboxCardId[]>> = {
   heavyCivil: ['equipmentUtilization', 'zeroActivity', 'utilizationTrend', 'commandCenterMap', 'earthMover'],
   specialty: ['performanceGauge', 'laborSCurve', 'earnedValue', 'productionHealth', 'burnCurve'],
   planner: ['smartBench', 'bidSimulator', 'allocationPlan', 'capacityDemand', 'wbsHeatmap'],
 }
 
-export function isRelevant(cardId: SandboxCardId, persona: SandboxPersona): boolean {
+export function isRelevant(cardId: SandboxCardId, persona: Persona): boolean {
   const personas = RELEVANCE_MAP[cardId]
   return personas === undefined || personas.includes(persona)
 }
 
-export function isHero(cardId: SandboxCardId, persona: SandboxPersona): boolean {
+export function isHero(cardId: SandboxCardId, persona: Persona): boolean {
   return HERO_MAP[persona]?.includes(cardId) ?? false
 }

@@ -10,9 +10,9 @@ interface PersonaDropdownProps {
 }
 
 const OPTIONS: { value: Persona; label: string }[] = [
-  { value: 'heavyCivil', label: 'Civil' },
-  { value: 'geco', label: 'Gen Con' },
-  { value: 'engineering', label: 'Engineering' },
+  { value: 'heavyCivil', label: 'Heavy Civil PM' },
+  { value: 'specialty', label: 'Specialty Contractor' },
+  { value: 'planner', label: 'Engineering Planner' },
 ]
 
 export default function PersonaDropdown({ value, onChange, variant = 'default' }: PersonaDropdownProps) {

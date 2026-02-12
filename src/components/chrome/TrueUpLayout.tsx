@@ -27,7 +27,7 @@ function getNextBestActionsFromRows(
 }
 
 export default function TrueUpLayout() {
-  const [persona, setPersona] = useState<Persona>('geco')
+  const [persona, setPersona] = useState<Persona>('specialty')
   const [nlQuery, setNlQuery] = useState('')
   const [actionsPanelOpen, setActionsPanelOpen] = useState(true)
   const [selectedRowId, setSelectedRowId] = useState<string | null>(null)

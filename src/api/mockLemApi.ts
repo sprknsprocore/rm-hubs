@@ -3,8 +3,8 @@ import type {
   NextBestAction,
   NextBestActionPriority,
   HeavyCivilPayload,
-  GecoPayload,
-  EngineeringPayload,
+  SpecialtyPayload,
+  PlannerPayload,
   UnifiedLemPayload,
   GlobalAlert,
   EquipmentPin,
@@ -275,7 +275,7 @@ function burnCurveToPayload(
 export function getPersonaPayloadFromUnified(
   unified: UnifiedLemPayload,
   persona: Persona
-): HeavyCivilPayload | GecoPayload | EngineeringPayload {
+): HeavyCivilPayload | SpecialtyPayload | PlannerPayload {
   if (persona === 'heavyCivil') {
     const telematics = unified.equipmentData.telematics
     const idleCount = telematics.filter((t) => t.daysInactive >= 3).length
@@ -295,7 +295,7 @@ export function getPersonaPayloadFromUnified(
       dailyHuddleRecap: HEAVY_CIVIL_DAILY_HUDDLE,
     }
   }
-  if (persona === 'geco') {
+  if (persona === 'specialty') {
     const labor = unified.laborData
     return {
       laborCurves: sCurveToLaborCurves(labor.sCurve),
@@ -336,8 +336,8 @@ export function getDashboardPayload(persona: Persona) {
   const data = getPersonaPayloadFromUnified(unified, persona)
   return { persona, data } as
     | { persona: 'heavyCivil'; data: HeavyCivilPayload }
-    | { persona: 'geco'; data: GecoPayload }
-    | { persona: 'engineering'; data: EngineeringPayload }
+    | { persona: 'specialty'; data: SpecialtyPayload }
+    | { persona: 'planner'; data: PlannerPayload }
 }
 
 // —— Reconciliation (True-Up) mock data ——

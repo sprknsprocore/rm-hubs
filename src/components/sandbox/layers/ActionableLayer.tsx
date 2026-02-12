@@ -8,11 +8,11 @@ import MissingProductionCard from '../cards/MissingProductionCard'
 import UnapprovedTimesheetsCard from '../cards/UnapprovedTimesheetsCard'
 import DearGcCard from '../cards/DearGcCard'
 import SkillsetGapCard from '../cards/SkillsetGapCard'
-import type { HubData, SandboxPersona } from '../../../hooks/useHubData'
+import type { HubData, Persona } from '../../../hooks/useHubData'
 
 interface ActionableLayerProps {
   data: HubData
-  persona: SandboxPersona
+  persona: Persona
 }
 
 export default function ActionableLayer({ data, persona }: ActionableLayerProps) {

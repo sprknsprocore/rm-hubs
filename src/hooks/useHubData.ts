@@ -1,9 +1,8 @@
 import { useMemo, useState, useCallback } from 'react'
 import { getUnifiedLemPayload } from '../api/mockLemApi'
 
-// ── Sandbox-specific types ──────────────────────────────────────────
-
-export type SandboxPersona = 'heavyCivil' | 'specialty' | 'planner'
+// Re-export unified Persona type for sandbox consumers
+export type { Persona } from '../types/lem'
 
 export interface PerformanceFactorData {
   budgetedHours: number
