@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react'
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
 import L from 'leaflet'
+import 'leaflet/dist/leaflet.css'
 import ActionableInsightCard from '../../cards/ActionableInsightCard'
 import type { EquipmentPin } from '../../../hooks/useHubData'
 
