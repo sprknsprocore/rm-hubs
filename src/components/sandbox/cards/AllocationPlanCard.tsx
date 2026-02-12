@@ -20,8 +20,8 @@ export default function AllocationPlanCard({ data, onExpand }: AllocationPlanCar
   const gap = latest ? latest.requested - latest.assigned : 0
 
   const signal = (
-    <div className="flex flex-col gap-3">
-      <div className="flex items-baseline gap-3">
+    <div className="flex flex-1 flex-col gap-3">
+      <div className="flex shrink-0 items-baseline gap-3">
         <span className="text-[12px] font-medium" style={{ color: 'var(--figma-text-secondary)' }}>
           Resource gap:
         </span>
@@ -32,7 +32,7 @@ export default function AllocationPlanCard({ data, onExpand }: AllocationPlanCar
           {gap > 0 ? `−${gap}` : gap} headcount
         </span>
       </div>
-      <div className="h-[220px] w-full min-w-0">
+      <div className="min-h-[220px] w-full min-w-0 flex-1">
         <ResponsiveContainer width="100%" height="100%">
           <BarChart data={data} margin={{ top: 8, right: 8, left: 0, bottom: 0 }}>
             <XAxis dataKey="month" tick={{ fontSize: 10 }} stroke="var(--figma-text-secondary)" />
@@ -70,6 +70,7 @@ export default function AllocationPlanCard({ data, onExpand }: AllocationPlanCar
       context={context}
       kickoff={{ label: 'Request Resources', onClick: () => onExpand?.('allocation-plan') }}
       kickoffPriority="p2"
+      expandSignal
       onInsightExpand={onExpand ? () => onExpand('allocation-plan') : undefined}
     />
   )

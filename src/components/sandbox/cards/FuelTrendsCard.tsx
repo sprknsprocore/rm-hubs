@@ -22,8 +22,8 @@ export default function FuelTrendsCard({ data, onExpand }: FuelTrendsCardProps) 
   const avgCostPerGal = totalCost / totalGallons
 
   const signal = (
-    <div className="flex flex-col gap-3">
-      <div className="flex items-center gap-3">
+    <div className="flex flex-1 flex-col gap-3">
+      <div className="flex shrink-0 items-center gap-3">
         <div
           className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg"
           style={{ backgroundColor: 'var(--figma-bg-depth2)', color: 'var(--figma-text-secondary)' }}
@@ -51,7 +51,7 @@ export default function FuelTrendsCard({ data, onExpand }: FuelTrendsCardProps) 
           </div>
         </div>
       </div>
-      <div className="h-[160px] w-full min-w-0">
+      <div className="min-h-[160px] w-full min-w-0 flex-1">
         <ResponsiveContainer width="100%" height="100%">
           <ComposedChart data={data} margin={{ top: 8, right: 8, left: 0, bottom: 0 }}>
             <XAxis dataKey="week" tick={{ fontSize: 10 }} stroke="var(--figma-text-secondary)" />
@@ -99,6 +99,7 @@ export default function FuelTrendsCard({ data, onExpand }: FuelTrendsCardProps) 
       context={context}
       kickoff={{ label: 'View Fleet Costs', onClick: () => onExpand?.('fuel-trends') }}
       kickoffPriority="p3"
+      expandSignal
       onInsightExpand={onExpand ? () => onExpand('fuel-trends') : undefined}
     />
   )

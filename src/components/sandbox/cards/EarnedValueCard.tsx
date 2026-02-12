@@ -65,7 +65,7 @@ export default function EarnedValueCard({ data, onExpand }: EarnedValueCardProps
   })
 
   const signal = (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-1 flex-col gap-4">
       {/* Progress bar */}
       <div className="flex flex-col gap-2">
         <div className="flex items-center justify-between">
@@ -177,7 +177,7 @@ export default function EarnedValueCard({ data, onExpand }: EarnedValueCardProps
       </div>
 
       {/* Chart */}
-      <div className="h-[180px] w-full min-w-0">
+      <div className="min-h-[180px] w-full min-w-0 flex-1">
         <ResponsiveContainer width="100%" height="100%">
           <LineChart data={chartData} margin={{ top: 8, right: 8, left: 0, bottom: 0 }}>
             <CartesianGrid strokeDasharray="3 3" stroke="var(--figma-bg-outline)" />
@@ -218,6 +218,7 @@ export default function EarnedValueCard({ data, onExpand }: EarnedValueCardProps
       context={context}
       kickoff={{ label: 'Review Forecast', onClick: () => onExpand?.('earned-value') }}
       kickoffPriority="p1"
+      expandSignal
       onInsightExpand={onExpand ? () => onExpand('earned-value') : undefined}
     />
   )

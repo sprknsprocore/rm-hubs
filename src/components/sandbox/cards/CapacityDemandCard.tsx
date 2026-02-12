@@ -11,7 +11,7 @@ export default function CapacityDemandCard({ data, onExpand }: CapacityDemandCar
   const overCapacity = data.bars.some((b) => b.demand > data.capacityLine)
 
   const signal = (
-    <div className="flex flex-col gap-3">
+    <div className="flex flex-1 flex-col gap-3">
       {overCapacity && (
         <div
           className="rounded-lg px-3 py-2 text-[12px] font-medium"
@@ -20,7 +20,7 @@ export default function CapacityDemandCard({ data, onExpand }: CapacityDemandCar
           Demand exceeds capacity in one or more periods
         </div>
       )}
-      <div className="h-[180px]">
+      <div className="min-h-[180px] flex-1">
         <ResponsiveContainer width="100%" height="100%">
           <BarChart data={data.bars} margin={{ top: 4, right: 8, bottom: 0, left: -16 }}>
             <CartesianGrid strokeDasharray="3 3" stroke="var(--figma-bg-outline)" />
@@ -75,6 +75,7 @@ export default function CapacityDemandCard({ data, onExpand }: CapacityDemandCar
       context={context}
       kickoff={{ label: 'View Hiring Plan', onClick: () => onExpand?.('capacity-demand') }}
       kickoffPriority="p2"
+      expandSignal
       onInsightExpand={onExpand ? () => onExpand('capacity-demand') : undefined}
     />
   )

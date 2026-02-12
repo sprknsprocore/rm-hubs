@@ -20,14 +20,14 @@ export default function ProjectedMarginCard({ data, onExpand }: ProjectedMarginC
   const sparkData = data.sparkline.map((v, i) => ({ idx: i, margin: v }))
 
   const signal = (
-    <div className="flex flex-col items-center gap-3">
-      <div className="flex items-baseline gap-6">
+    <div className="flex flex-1 flex-col items-center gap-3">
+      <div className="flex shrink-0 items-baseline gap-4">
         <div className="text-center">
           <p className="text-[11px] font-medium" style={{ color: 'var(--figma-text-secondary)' }}>
             Current
           </p>
           <p
-            className="text-3xl font-bold tabular-nums tracking-tight"
+            className="text-2xl font-bold tabular-nums tracking-tight"
             style={{ color: 'var(--figma-text-primary)' }}
           >
             {data.currentMarginPct}%
@@ -38,12 +38,12 @@ export default function ProjectedMarginCard({ data, onExpand }: ProjectedMarginC
           <p className="text-[11px] font-medium" style={{ color: 'var(--figma-text-secondary)' }}>
             Projected
           </p>
-          <p className="text-3xl font-bold tabular-nums tracking-tight" style={{ color: trendColor }}>
+          <p className="text-2xl font-bold tabular-nums tracking-tight" style={{ color: trendColor }}>
             {data.projectedMarginPct}%
           </p>
         </div>
       </div>
-      <div className="h-[80px] w-full">
+      <div className="min-h-[60px] w-full flex-1">
         <ResponsiveContainer width="100%" height="100%">
           <LineChart data={sparkData} margin={{ top: 4, right: 4, left: 4, bottom: 4 }}>
             <Line
@@ -73,6 +73,7 @@ export default function ProjectedMarginCard({ data, onExpand }: ProjectedMarginC
       context={context}
       kickoff={{ label: 'Adjust Estimate', onClick: () => onExpand?.('projected-margin') }}
       kickoffPriority="p2"
+      expandSignal
       onInsightExpand={onExpand ? () => onExpand('projected-margin') : undefined}
     />
   )

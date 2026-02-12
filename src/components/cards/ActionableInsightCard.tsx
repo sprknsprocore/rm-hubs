@@ -26,6 +26,8 @@ interface ActionableInsightCardProps {
   secondaryAction?: SecondaryActionConfig
   /** When provided, renders a Sparkles "Insights" button in the card header to open the Insights sidebar. */
   onInsightExpand?: () => void
+  /** When true, the signal area expands to fill available card height (ideal for chart-based cards). */
+  expandSignal?: boolean
   className?: string
 }
 
@@ -56,6 +58,7 @@ export default function ActionableInsightCard({
   titleLayoutId,
   secondaryAction,
   onInsightExpand,
+  expandSignal = false,
   className = '',
 }: ActionableInsightCardProps) {
   const showHeader = !!(title || secondaryAction || onInsightExpand)
@@ -117,9 +120,9 @@ export default function ActionableInsightCard({
         </div>
       )}
       <div className="relative flex min-h-0 flex-1 flex-col px-3 pb-3 pt-3 md:px-4 md:pb-4 md:pt-4">
-        {/* Signal + context: flex-1 + justify-center so content is vertically centered in the available space */}
-        <div className="flex min-h-0 min-w-0 flex-1 flex-col justify-center overflow-hidden">
-          <div className="flex min-h-0 min-w-0 shrink-0 flex-col overflow-hidden">
+        {/* Signal + context: flex-1 so space above CTA is used; content stays at top */}
+        <div className="flex min-h-0 min-w-0 flex-1 flex-col overflow-hidden">
+          <div className={`flex min-h-0 min-w-0 flex-col overflow-hidden ${expandSignal ? 'flex-1' : 'shrink-0'}`}>
             {signal}
           </div>
           <div

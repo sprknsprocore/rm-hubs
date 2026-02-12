@@ -9,7 +9,7 @@ interface BurnCurveCardProps {
 
 export default function BurnCurveCard({ data, onExpand }: BurnCurveCardProps) {
   const signal = (
-    <div className="flex flex-col gap-3">
+    <div className="flex flex-1 flex-col gap-3">
       {data.delayFlag && (
         <div
           className="flex items-center gap-2 rounded-lg px-3 py-2 text-[12px] font-medium"
@@ -18,7 +18,7 @@ export default function BurnCurveCard({ data, onExpand }: BurnCurveCardProps) {
           <span>Delay risk:</span> {data.insight}
         </div>
       )}
-      <div className="h-[180px]">
+      <div className="min-h-[180px] flex-1">
         <ResponsiveContainer width="100%" height="100%">
           <LineChart data={data.points} margin={{ top: 4, right: 8, bottom: 0, left: -16 }}>
             <CartesianGrid strokeDasharray="3 3" stroke="var(--figma-bg-outline)" />
@@ -58,6 +58,7 @@ export default function BurnCurveCard({ data, onExpand }: BurnCurveCardProps) {
       context={context}
       kickoff={{ label: 'Create Delay Notice', onClick: () => onExpand?.('burn-curve') }}
       kickoffPriority="p1"
+      expandSignal
       onInsightExpand={onExpand ? () => onExpand('burn-curve') : undefined}
     />
   )

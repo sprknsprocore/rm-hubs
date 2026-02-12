@@ -19,7 +19,7 @@ export default function EquipmentUtilizationCard({ data, onExpand }: EquipmentUt
   const isLow = utilizationPct < 70
 
   const signal = (
-    <div className="flex flex-col items-center gap-3">
+    <div className="flex flex-1 flex-col items-center justify-center gap-3">
       <div className="relative h-[160px] w-[160px]">
         <ResponsiveContainer width="100%" height="100%">
           <PieChart>
@@ -80,6 +80,7 @@ export default function EquipmentUtilizationCard({ data, onExpand }: EquipmentUt
       context={context}
       kickoff={{ label: 'Review Fleet', onClick: () => onExpand?.('equipment-utilization') }}
       kickoffPriority="p2"
+      expandSignal
       onInsightExpand={onExpand ? () => onExpand('equipment-utilization') : undefined}
     />
   )

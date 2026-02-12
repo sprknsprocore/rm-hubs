@@ -23,8 +23,8 @@ export default function UtilizationTrendCard({ data, onExpand }: UtilizationTren
   const underperforming = latest ? latest.actual < latest.scheduled : false
 
   const signal = (
-    <div className="flex flex-col gap-3">
-      <div className="flex items-baseline gap-4">
+    <div className="flex flex-1 flex-col gap-3">
+      <div className="flex shrink-0 items-baseline gap-4">
         <div className="flex items-baseline gap-1.5">
           <span className="text-[11px] font-medium" style={{ color: 'var(--figma-text-secondary)' }}>
             Avg Utilization:
@@ -50,7 +50,7 @@ export default function UtilizationTrendCard({ data, onExpand }: UtilizationTren
           </div>
         )}
       </div>
-      <div className="h-[200px] w-full min-w-0">
+      <div className="min-h-[200px] w-full min-w-0 flex-1">
         <ResponsiveContainer width="100%" height="100%">
           <ComposedChart data={data} margin={{ top: 8, right: 8, left: 0, bottom: 0 }}>
             <CartesianGrid strokeDasharray="3 3" stroke="var(--figma-bg-outline)" />
@@ -113,6 +113,7 @@ export default function UtilizationTrendCard({ data, onExpand }: UtilizationTren
       context={context}
       kickoff={{ label: 'Optimize Fleet', onClick: () => onExpand?.('utilization-trend') }}
       kickoffPriority="p2"
+      expandSignal
       onInsightExpand={onExpand ? () => onExpand('utilization-trend') : undefined}
     />
   )

@@ -29,8 +29,8 @@ export default function BidSimulatorToggle({ data, onExpand }: BidSimulatorToggl
   ]
 
   const signal = (
-    <div className="flex flex-col gap-3">
-      <div className="h-[100px] w-full min-w-0">
+    <div className="flex flex-1 flex-col gap-3">
+      <div className="min-h-[100px] w-full min-w-0 flex-1">
         <ResponsiveContainer width="100%" height="100%">
           <BarChart data={chartData} margin={{ top: 4, right: 8, left: 0, bottom: 0 }}>
             <XAxis dataKey="name" tick={{ fontSize: 10 }} stroke="var(--figma-text-secondary)" />
@@ -108,6 +108,7 @@ export default function BidSimulatorToggle({ data, onExpand }: BidSimulatorToggl
       context={context}
       kickoff={{ label: 'Model Capacity', onClick: () => onExpand?.('bid-simulator') }}
       kickoffPriority="p2"
+      expandSignal
       onInsightExpand={onExpand ? () => onExpand('bid-simulator') : undefined}
     />
   )

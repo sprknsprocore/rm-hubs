@@ -26,7 +26,7 @@ export default function BudgetVsActualCard({ data, onExpand }: BudgetVsActualCar
   const overBudget = latest ? latest.actual > latest.budgeted : false
 
   const signal = (
-    <div className="h-[180px] w-full min-w-0">
+    <div className="min-h-[180px] w-full min-w-0 flex-1">
       <ResponsiveContainer width="100%" height="100%">
         <AreaChart data={data} margin={{ top: 8, right: 8, left: 0, bottom: 0 }}>
           <CartesianGrid strokeDasharray="3 3" stroke="var(--figma-bg-outline)" />
@@ -81,6 +81,7 @@ export default function BudgetVsActualCard({ data, onExpand }: BudgetVsActualCar
       context={context}
       kickoff={{ label: 'Review Forecast', onClick: () => onExpand?.('budget-vs-actual') }}
       kickoffPriority="p2"
+      expandSignal
       onInsightExpand={onExpand ? () => onExpand('budget-vs-actual') : undefined}
     />
   )

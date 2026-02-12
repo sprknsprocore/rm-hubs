@@ -42,7 +42,7 @@ export default function CommandCenterMapCard({ data, onExpand }: CommandCenterMa
   }, [pins])
 
   const signal = (
-    <div className="flex flex-col gap-3">
+    <div className="flex flex-1 flex-col gap-3">
       {idleCount > 0 && (
         <div
           className="rounded-lg px-3 py-2 text-[12px] font-medium"
@@ -51,7 +51,7 @@ export default function CommandCenterMapCard({ data, onExpand }: CommandCenterMa
           {idleCount} unit(s) idle 3+ days &mdash; costing money
         </div>
       )}
-      <div className="h-[220px] overflow-hidden rounded-lg" style={{ border: '1px solid var(--figma-bg-outline)' }}>
+      <div className="min-h-[220px] flex-1 overflow-hidden rounded-lg" style={{ border: '1px solid var(--figma-bg-outline)' }}>
         <MapContainer center={center} zoom={13} scrollWheelZoom={false} style={{ height: '100%', width: '100%' }}>
           <TileLayer
             attribution='&copy; <a href="https://osm.org/copyright">OpenStreetMap</a>'
@@ -95,6 +95,7 @@ export default function CommandCenterMapCard({ data, onExpand }: CommandCenterMa
       context={context}
       kickoff={{ label: 'Off-Rent Idle', onClick: () => onExpand?.('command-center') }}
       kickoffPriority="p2"
+      expandSignal
       onInsightExpand={onExpand ? () => onExpand('command-center') : undefined}
     />
   )
