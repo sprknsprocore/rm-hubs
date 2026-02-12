@@ -93,29 +93,29 @@ export default function EarnedValueCard({ data, onExpand }: EarnedValueCardProps
         </div>
       </div>
 
-      {/* 6 KPI row */}
-      <div className="grid grid-cols-3 gap-x-4 gap-y-2 sm:grid-cols-6">
+      {/* KPI rows – show key metrics on small screens, all on lg+ */}
+      <div className="grid grid-cols-2 gap-x-4 gap-y-2 sm:grid-cols-3 lg:grid-cols-6">
         {[
-          { label: 'Actual Costs', value: data.actualCost },
-          { label: 'Scheduled costs', value: data.scheduledCost },
-          { label: 'To Date Costs', value: data.toDateCost },
-          { label: 'Earned Value', value: data.earnedValue },
-          { label: 'Est. Cost at Completion', value: data.estAtCompletion },
-          { label: 'Total Budgeted Costs', value: data.totalBudget },
+          { label: 'Actual Costs', value: data.actualCost, primary: true },
+          { label: 'Scheduled costs', value: data.scheduledCost, primary: false },
+          { label: 'To Date Costs', value: data.toDateCost, primary: false },
+          { label: 'Earned Value', value: data.earnedValue, primary: true },
+          { label: 'Est. Cost at Completion', value: data.estAtCompletion, primary: false },
+          { label: 'Total Budgeted Costs', value: data.totalBudget, primary: true },
         ].map((kpi) => (
-          <div key={kpi.label} className="flex flex-col">
-            <span className="text-[10px] leading-tight" style={{ color: 'var(--figma-text-tertiary)' }}>
+          <div key={kpi.label} className={`flex flex-col ${kpi.primary ? '' : 'hidden sm:flex'}`}>
+            <span className="truncate text-[10px] leading-tight" style={{ color: 'var(--figma-text-tertiary)' }}>
               {kpi.label}
             </span>
-            <span className="text-[13px] font-semibold tabular-nums" style={{ color: 'var(--figma-text-primary)' }}>
+            <span className="truncate text-[13px] font-semibold tabular-nums" style={{ color: 'var(--figma-text-primary)' }}>
               ${kpi.value.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
             </span>
           </div>
         ))}
       </div>
 
-      {/* CPI / SPI chips */}
-      <div className="flex gap-3">
+      {/* CPI / SPI chips – wrap on small screens, hide CV/SV on mobile */}
+      <div className="flex flex-wrap gap-2 sm:gap-3">
         <div className="flex items-center gap-1.5 rounded-md border px-2 py-1" style={{ borderColor: 'var(--figma-bg-outline)' }}>
           <span className="text-[10px] font-medium" style={{ color: 'var(--figma-text-secondary)' }}>CPI</span>
           <span
@@ -134,7 +134,7 @@ export default function EarnedValueCard({ data, onExpand }: EarnedValueCardProps
             {data.spi.toFixed(2)}
           </span>
         </div>
-        <div className="flex items-center gap-1.5 rounded-md border px-2 py-1" style={{ borderColor: 'var(--figma-bg-outline)' }}>
+        <div className="hidden items-center gap-1.5 rounded-md border px-2 py-1 sm:flex" style={{ borderColor: 'var(--figma-bg-outline)' }}>
           <span className="text-[10px] font-medium" style={{ color: 'var(--figma-text-secondary)' }}>CV</span>
           <span
             className="text-[13px] font-bold tabular-nums"
@@ -143,7 +143,7 @@ export default function EarnedValueCard({ data, onExpand }: EarnedValueCardProps
             {data.costVariance >= 0 ? '+' : ''}${(data.costVariance / 1000).toFixed(1)}k
           </span>
         </div>
-        <div className="flex items-center gap-1.5 rounded-md border px-2 py-1" style={{ borderColor: 'var(--figma-bg-outline)' }}>
+        <div className="hidden items-center gap-1.5 rounded-md border px-2 py-1 sm:flex" style={{ borderColor: 'var(--figma-bg-outline)' }}>
           <span className="text-[10px] font-medium" style={{ color: 'var(--figma-text-secondary)' }}>SV</span>
           <span
             className="text-[13px] font-bold tabular-nums"
@@ -154,9 +154,9 @@ export default function EarnedValueCard({ data, onExpand }: EarnedValueCardProps
         </div>
       </div>
 
-      {/* L / M / E tabs */}
+      {/* L / M / E tabs – hidden on very small screens */}
       <div
-        className="flex gap-0.5 rounded-lg border p-0.5"
+        className="hidden gap-0.5 rounded-lg border p-0.5 sm:flex"
         style={{ borderColor: 'var(--figma-bg-outline)', backgroundColor: 'var(--figma-bg-depth2)' }}
       >
         {TAB_OPTIONS.map((opt) => (
@@ -164,7 +164,7 @@ export default function EarnedValueCard({ data, onExpand }: EarnedValueCardProps
             key={opt.value}
             type="button"
             onClick={() => setTab(opt.value)}
-            className="rounded-md px-3 py-1.5 text-[12px] font-medium transition-colors"
+            className="flex-1 rounded-md px-2 py-1.5 text-[11px] font-medium transition-colors sm:flex-none sm:px-3 sm:text-[12px]"
             style={
               tab === opt.value
                 ? { backgroundColor: 'var(--figma-bg-default)', color: 'var(--figma-text-primary)', boxShadow: '0 1px 2px rgba(0,0,0,0.05)' }
@@ -176,8 +176,8 @@ export default function EarnedValueCard({ data, onExpand }: EarnedValueCardProps
         ))}
       </div>
 
-      {/* Chart */}
-      <div className="min-h-[180px] w-full min-w-0 flex-1">
+      {/* Chart – hidden on small screens to prevent overflow */}
+      <div className="hidden min-h-[180px] w-full min-w-0 flex-1 sm:block">
         <ResponsiveContainer width="100%" height="100%">
           <LineChart data={chartData} margin={{ top: 8, right: 8, left: 0, bottom: 0 }}>
             <CartesianGrid strokeDasharray="3 3" stroke="var(--figma-bg-outline)" />

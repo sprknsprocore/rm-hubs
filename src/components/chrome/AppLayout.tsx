@@ -118,7 +118,7 @@ export default function AppLayout() {
                 </div>
               </div>
             ) : (
-              <div className="mx-auto max-w-7xl px-0">
+              <div className="mx-auto max-w-7xl px-4 md:px-6">
                 <div className="pb-4 pt-4 md:pb-6 md:pt-5" data-tour="hub-content">
                   {showHub && (
                     <>

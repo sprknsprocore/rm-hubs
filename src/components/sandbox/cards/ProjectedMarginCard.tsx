@@ -1,4 +1,4 @@
-import { LineChart, Line, ResponsiveContainer } from 'recharts'
+import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts'
 import ActionableInsightCard from '../../cards/ActionableInsightCard'
 import type { ProjectedMarginData } from '../../../hooks/useHubData'
 import { TrendingDown, TrendingUp, Minus } from 'lucide-react'
@@ -45,7 +45,32 @@ export default function ProjectedMarginCard({ data, onExpand }: ProjectedMarginC
       </div>
       <div className="min-h-[60px] w-full flex-1">
         <ResponsiveContainer width="100%" height="100%">
-          <LineChart data={sparkData} margin={{ top: 4, right: 4, left: 4, bottom: 4 }}>
+          <LineChart data={sparkData} margin={{ top: 4, right: 4, left: -20, bottom: 0 }}>
+            <XAxis
+              dataKey="idx"
+              tick={{ fontSize: 10, fill: 'var(--figma-text-tertiary)' }}
+              stroke="var(--figma-bg-outline)"
+              tickFormatter={(i: number) => `W${i + 1}`}
+              interval="preserveStartEnd"
+            />
+            <YAxis
+              tick={{ fontSize: 10, fill: 'var(--figma-text-tertiary)' }}
+              stroke="var(--figma-bg-outline)"
+              tickFormatter={(v: number) => `${v}%`}
+              domain={['dataMin - 1', 'dataMax + 1']}
+              width={40}
+            />
+            <Tooltip
+              contentStyle={{
+                fontSize: 11,
+                backgroundColor: 'var(--figma-bg-default)',
+                border: '1px solid var(--figma-bg-outline)',
+                borderRadius: 8,
+                boxShadow: '0 1px 4px rgba(0,0,0,0.08)',
+              }}
+              formatter={(value: number) => [`${value.toFixed(1)}%`, 'Margin']}
+              labelFormatter={(i: number) => `Week ${i + 1}`}
+            />
             <Line
               type="monotone"
               dataKey="margin"

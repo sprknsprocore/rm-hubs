@@ -14,11 +14,11 @@ export default function HelixHub() {
       <div className="flex min-w-0 flex-1 flex-col">
         <HelixTopRail />
         <main className="flex-1 md:p-6" style={{ padding: 'var(--helix-grid-gap)' }}>
+          <div className="@container mx-auto" style={{ maxWidth: 'var(--helix-content-max)' }}>
           <div
-            className="mx-auto grid md:grid-cols-2"
+            className="grid @min-[640px]:grid-cols-2"
             style={{
               gap: 'var(--helix-grid-gap)',
-              maxWidth: 'var(--helix-content-max)',
             }}
           >
             <div className="min-h-[300px]">
@@ -33,6 +33,7 @@ export default function HelixHub() {
             <div className="min-h-[300px]">
               <FinancialStatusCard />
             </div>
+          </div>
           </div>
         </main>
       </div>

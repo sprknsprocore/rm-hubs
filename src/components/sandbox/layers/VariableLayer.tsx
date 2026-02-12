@@ -89,7 +89,8 @@ export default function VariableLayer({ data, persona }: VariableLayerProps) {
           <p className="text-sm">No active events. Toggle a trigger above to see cards appear.</p>
         </div>
       )}
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3 md:gap-[var(--bento-gap)]">
+      <div className="@container">
+      <div className="grid grid-cols-1 gap-4 @min-[640px]:grid-cols-2 @min-[1024px]:grid-cols-3 @min-[640px]:gap-[var(--bento-gap)]">
         <AnimatePresence mode="popLayout">
           {triggers.isRaining && (
             <motion.div
@@ -153,9 +154,11 @@ export default function VariableLayer({ data, persona }: VariableLayerProps) {
           )}
         </AnimatePresence>
       </div>
+      </div>
 
       {/* Static variable card — always visible when buffer data exists */}
-      <div className="mt-4 grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3 md:gap-[var(--bento-gap)]">
+      <div className="@container mt-4">
+      <div className="grid grid-cols-1 gap-4 @min-[640px]:grid-cols-2 @min-[1024px]:grid-cols-3 @min-[640px]:gap-[var(--bento-gap)]">
         <SandboxCard cardId="milestoneBuffer" persona={persona}>
           <CardDescriptor
             value="Shows how many days of buffer exist between predecessor completion and the next milestone. Low-buffer milestones are the most vulnerable to cascade delay — giving PMs time to intervene before it's too late."
@@ -164,6 +167,7 @@ export default function VariableLayer({ data, persona }: VariableLayerProps) {
             <MilestoneBufferCard data={data.milestoneBuffer} />
           </CardDescriptor>
         </SandboxCard>
+      </div>
       </div>
     </LayerSection>
   )

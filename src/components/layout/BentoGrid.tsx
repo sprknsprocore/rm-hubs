@@ -16,11 +16,11 @@ interface BentoGridProps {
   gridTemplateColumns?: string
 }
 
-/** Responsive columns: 2-col hubs stay at 2 (avoids gap); 3-col (GECO) gets xl:3. */
+/** Responsive columns using container queries so the grid adapts to its own width, not the viewport. */
 const COLUMN_CLASSES: Record<BentoColumns, string> = {
-  1: 'md:grid-cols-1',
-  2: 'md:grid-cols-2',
-  3: 'md:grid-cols-2 xl:grid-cols-3',
+  1: '@min-[640px]:grid-cols-1',
+  2: '@min-[640px]:grid-cols-2',
+  3: '@min-[640px]:grid-cols-2 @min-[1024px]:grid-cols-3',
 }
 
 const cellTransition = {
@@ -28,12 +28,12 @@ const cellTransition = {
   ease: EASE_OUT_EXPO,
 }
 
-/** Responsive span: mobile full width; md+ respect span (xl only for columns=3). */
+/** Responsive span: single-column when container is narrow; respect span when wide enough. */
 function getGridColumnClass(child: React.ReactNode): string {
   if (!React.isValidElement(child) || !('props' in child) || child.props == null) return 'col-span-1'
   const span = (child.props as { span?: 1 | 2 | 3 }).span
   if (span === 3) return 'col-span-full'
-  if (span === 2) return 'col-span-1 md:col-span-2'
+  if (span === 2) return 'col-span-1 @min-[640px]:col-span-2'
   return 'col-span-1'
 }
 
@@ -49,37 +49,39 @@ export default function BentoGrid({
   const useCustomTemplate = gridTemplateColumns != null
   const childArray = Children.toArray(children)
   return (
-    <motion.div
-      className={`grid w-full grid-cols-1 gap-4 sm:gap-5 md:gap-[var(--bento-gap)] ${columnsClass} ${rowsClass} ${className}`}
-      style={{
-        ...(useCustomTemplate ? { gridTemplateColumns } : {}),
-      }}
-      initial="hidden"
-      animate="visible"
-      variants={{
-        visible: { transition: { staggerChildren: BENTO_STAGGER_DELAY, delayChildren: 0 } },
-        hidden: {},
-      }}
-    >
-      {childArray.map((child, index) => (
-        <motion.div
-          key={index}
-          variants={{
-            hidden: { opacity: 0, y: 8 },
-            visible: { opacity: 1, y: 0 },
-          }}
-          transition={{
-            ...cellTransition,
-            delay: index * BENTO_STAGGER_DELAY,
-          }}
-          className={`flex min-h-0 flex-col ${getGridColumnClass(child)}`}
-        >
-          <div className="flex min-h-0 flex-1 flex-col">
-            {child}
-          </div>
-        </motion.div>
-      ))}
-    </motion.div>
+    <div className="@container w-full">
+      <motion.div
+        className={`grid w-full grid-cols-1 gap-4 @min-[480px]:gap-5 @min-[640px]:gap-[var(--bento-gap)] ${columnsClass} ${rowsClass} ${className}`}
+        style={{
+          ...(useCustomTemplate ? { gridTemplateColumns } : {}),
+        }}
+        initial="hidden"
+        animate="visible"
+        variants={{
+          visible: { transition: { staggerChildren: BENTO_STAGGER_DELAY, delayChildren: 0 } },
+          hidden: {},
+        }}
+      >
+        {childArray.map((child, index) => (
+          <motion.div
+            key={index}
+            variants={{
+              hidden: { opacity: 0, y: 8 },
+              visible: { opacity: 1, y: 0 },
+            }}
+            transition={{
+              ...cellTransition,
+              delay: index * BENTO_STAGGER_DELAY,
+            }}
+            className={`flex min-h-0 flex-col ${getGridColumnClass(child)}`}
+          >
+            <div className="flex min-h-0 flex-1 flex-col">
+              {child}
+            </div>
+          </motion.div>
+        ))}
+      </motion.div>
+    </div>
   )
 }
 

@@ -125,9 +125,11 @@ export default function ProjectHub({
           <VarToggle label="Fault Codes" checked={showMaintenance} onChange={setShowMaintenance} />
         </div>
         {(showWeather || showMaintenance) && (
-          <div className="mt-2 grid grid-cols-1 gap-4 md:grid-cols-2">
-            {showWeather && <WeatherRiskCard data={data.weatherRisk} />}
-            {showMaintenance && <CriticalMaintenanceCard data={data.equipmentFaultCodes} />}
+          <div className="@container mt-2">
+            <div className="grid grid-cols-1 gap-4 @min-[640px]:grid-cols-2">
+              {showWeather && <WeatherRiskCard data={data.weatherRisk} />}
+              {showMaintenance && <CriticalMaintenanceCard data={data.equipmentFaultCodes} />}
+            </div>
           </div>
         )}
         {trueUpDrawer}
@@ -185,9 +187,11 @@ export default function ProjectHub({
           <VarToggle label="Predecessor Delay" checked={showPredecessor} onChange={setShowPredecessor} />
         </div>
         {showPredecessor && (
-          <div className="mt-2 grid grid-cols-1 gap-4 md:grid-cols-2">
-            <PredecessorDelayCard data={data.predecessorDelay} />
-            <MilestoneBufferCard data={data.milestoneBuffer} />
+          <div className="@container mt-2">
+            <div className="grid grid-cols-1 gap-4 @min-[640px]:grid-cols-2">
+              <PredecessorDelayCard data={data.predecessorDelay} />
+              <MilestoneBufferCard data={data.milestoneBuffer} />
+            </div>
           </div>
         )}
         {trueUpDrawer}
@@ -246,9 +250,11 @@ export default function ProjectHub({
         <VarToggle label="Predecessor Delay" checked={showPredecessor} onChange={setShowPredecessor} />
       </div>
       {showPredecessor && (
-        <div className="mt-2 grid grid-cols-1 gap-4 md:grid-cols-2">
-          <PredecessorDelayCard data={data.predecessorDelay} />
-          <MilestoneBufferCard data={data.milestoneBuffer} />
+        <div className="@container mt-2">
+          <div className="grid grid-cols-1 gap-4 @min-[640px]:grid-cols-2">
+            <PredecessorDelayCard data={data.predecessorDelay} />
+            <MilestoneBufferCard data={data.milestoneBuffer} />
+          </div>
         </div>
       )}
       {trueUpDrawer}

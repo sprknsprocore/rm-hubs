@@ -124,8 +124,8 @@
   border-color: var(--figma-card-stroke);
 }
 
-/* Bento grid row templates – hero row sizes to content; action row auto so height = tallest card */
-@media (min-width: 768px) {
+/* Bento grid row templates – use container queries so rows adapt to content area width, not viewport */
+@container (min-width: 640px) {
   .bento-rows-hero-action {
     grid-template-rows: minmax(0, auto) auto;
   }
