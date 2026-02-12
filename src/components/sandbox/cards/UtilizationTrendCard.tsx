@@ -1,5 +1,4 @@
 import {
-  LineChart,
   Line,
   XAxis,
   YAxis,
@@ -70,7 +69,7 @@ export default function UtilizationTrendCard({ data }: UtilizationTrendCardProps
                 borderRadius: 'var(--figma-radius-card)',
                 boxShadow: '0 1px 4px rgba(0,0,0,0.08)',
               }}
-              formatter={(value: number) => [`${value}%`, '']}
+              formatter={(value: number | undefined) => [`${value ?? 0}%`, '']}
             />
             <Legend wrapperStyle={{ fontSize: 10 }} iconSize={8} iconType="line" />
             <Area

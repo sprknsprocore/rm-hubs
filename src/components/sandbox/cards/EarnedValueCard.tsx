@@ -191,7 +191,7 @@ export default function EarnedValueCard({ data }: EarnedValueCardProps) {
                 borderRadius: 'var(--figma-radius-card)',
                 boxShadow: '0 1px 4px rgba(0,0,0,0.08)',
               }}
-              formatter={(value: number) => [`$${value.toLocaleString()}`, '']}
+              formatter={(value: number | undefined) => [`$${(value ?? 0).toLocaleString()}`, '']}
             />
             <Legend wrapperStyle={{ fontSize: 10 }} iconSize={8} iconType="line" />
             <Line type="monotone" dataKey="actual" name="Actual" stroke="#16a34a" strokeWidth={2.5} dot={{ r: 3, fill: '#16a34a' }} />
