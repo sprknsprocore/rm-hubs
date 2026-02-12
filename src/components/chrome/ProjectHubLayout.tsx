@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect, useRef, useCallback } from 'react'
+import { useState, useMemo, useEffect, useRef } from 'react'
 import { useParams, useNavigate, useSearchParams } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import LeftNav from './LeftNav'
@@ -46,7 +46,6 @@ export default function ProjectHubLayout() {
   }
 
   const showResourceManagementHeader = domain === 'hub'
-  const handleExpand = useCallback((insightId: string) => setSelectedInsightId(insightId), [])
   const insightsPanelOpen = selectedInsightId !== null
 
   useEffect(() => {

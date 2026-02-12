@@ -78,8 +78,6 @@ function SparklineViz({ points, label }: { points: number[]; label: string }) {
 }
 
 function BarViz({ bars }: { bars: { label: string; value: number; max: number }[] }) {
-  const globalMax = Math.max(...bars.map((b) => b.max), ...bars.map((b) => b.value))
-
   return (
     <div className="h-[80px] w-full">
       <ResponsiveContainer width="100%" height="100%">
