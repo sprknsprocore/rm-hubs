@@ -24,7 +24,12 @@ export default function SpecialtyHub(_props: SpecialtyHubProps) {
           <PortfolioHeatmap data={data.portfolioHealth} />
         </div>
       </BentoCell>
-      <BentoCell span={2}>
+      <BentoCell>
+        <div data-tour="card-projected-margin" className="flex min-h-0 flex-1 flex-col">
+          <ProjectedMarginCard data={data.projectedMargin} />
+        </div>
+      </BentoCell>
+      <BentoCell>
         <div data-tour="card-earned-value" className="flex min-h-0 flex-1 flex-col">
           <EarnedValueCard data={data.earnedValue} />
         </div>
@@ -35,8 +40,8 @@ export default function SpecialtyHub(_props: SpecialtyHubProps) {
         </div>
       </BentoCell>
       <BentoCell>
-        <div data-tour="card-projected-margin" className="flex min-h-0 flex-1 flex-col">
-          <ProjectedMarginCard data={data.projectedMargin} />
+        <div data-tour="card-unapproved-timesheets" className="flex min-h-0 flex-1 flex-col">
+          <UnapprovedTimesheetsCard data={data.unapprovedTimesheets} />
         </div>
       </BentoCell>
       <BentoCell span={2}>
@@ -52,11 +57,6 @@ export default function SpecialtyHub(_props: SpecialtyHubProps) {
       <BentoCell>
         <div data-tour="card-expiring-certs" className="flex min-h-0 flex-1 flex-col">
           <ExpiringCertsCard data={data.expiringCerts} />
-        </div>
-      </BentoCell>
-      <BentoCell span={2}>
-        <div data-tour="card-unapproved-timesheets" className="flex min-h-0 flex-1 flex-col">
-          <UnapprovedTimesheetsCard data={data.unapprovedTimesheets} />
         </div>
       </BentoCell>
     </BentoGrid>

@@ -24,6 +24,11 @@ export default function HeavyCivilHub(_props: HeavyCivilHubProps) {
         </div>
       </BentoCell>
       <BentoCell span={2}>
+        <div data-tour="card-zero-activity" className="flex min-h-0 flex-1 flex-col">
+          <ZeroActivityCard data={data.zeroActivityAlerts} />
+        </div>
+      </BentoCell>
+      <BentoCell span={2}>
         <div data-tour="card-command-center" className="flex min-h-0 flex-1 flex-col">
           <CommandCenterMapCard data={data.commandCenterPins} />
         </div>
@@ -38,19 +43,14 @@ export default function HeavyCivilHub(_props: HeavyCivilHubProps) {
           <UtilizationTrendCard data={data.utilizationTrend} />
         </div>
       </BentoCell>
-      <BentoCell span={2}>
-        <div data-tour="card-zero-activity" className="flex min-h-0 flex-1 flex-col">
-          <ZeroActivityCard data={data.zeroActivityAlerts} />
+      <BentoCell>
+        <div data-tour="card-daily-huddle" className="flex min-h-0 flex-1 flex-col">
+          <DailyHuddleRecapCard data={data.dailyHuddle} />
         </div>
       </BentoCell>
       <BentoCell>
         <div data-tour="card-fuel-trends" className="flex min-h-0 flex-1 flex-col">
           <FuelTrendsCard data={data.fuelTrends} />
-        </div>
-      </BentoCell>
-      <BentoCell>
-        <div data-tour="card-daily-huddle" className="flex min-h-0 flex-1 flex-col">
-          <DailyHuddleRecapCard data={data.dailyHuddle} />
         </div>
       </BentoCell>
     </BentoGrid>

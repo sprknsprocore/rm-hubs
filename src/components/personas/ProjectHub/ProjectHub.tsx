@@ -84,6 +84,11 @@ export default function ProjectHub({
     return (
       <>
         <BentoGrid columns={2} rows="hero-action">
+          <BentoCell span={2}>
+            <div className="flex min-h-0 flex-1 flex-col">
+              <ProductionHealthCard data={data.productionHealth} />
+            </div>
+          </BentoCell>
           <BentoCell>
             <div className="flex min-h-0 flex-1 flex-col">
               <PerformanceGauge data={data.performanceFactor} />
@@ -92,11 +97,6 @@ export default function ProjectHub({
           <BentoCell>
             <div className="flex min-h-0 flex-1 flex-col">
               <BudgetVsActualCard data={data.budgetVsActual} />
-            </div>
-          </BentoCell>
-          <BentoCell span={2}>
-            <div className="flex min-h-0 flex-1 flex-col">
-              <ProductionHealthCard data={data.productionHealth} />
             </div>
           </BentoCell>
           <BentoCell>
@@ -202,7 +202,7 @@ export default function ProjectHub({
               <GoldenThreadTimelineCard data={data.fieldLogs} />
             </div>
           </BentoCell>
-          <BentoCell>
+          <BentoCell span={2}>
             <div className="flex min-h-0 flex-1 flex-col">
               <MissingProductionCard data={data.missingProduction} />
             </div>
@@ -233,16 +233,6 @@ export default function ProjectHub({
   return (
     <>
       <BentoGrid columns={2} rows="hero-action">
-        <BentoCell>
-          <div className="flex min-h-0 flex-1 flex-col">
-            <PerformanceGauge data={data.performanceFactor} />
-          </div>
-        </BentoCell>
-        <BentoCell>
-          <div className="flex min-h-0 flex-1 flex-col">
-            <AllocationPlanCard data={data.allocationPlan} />
-          </div>
-        </BentoCell>
         <BentoCell span={2}>
           <div className="flex min-h-0 flex-1 flex-col">
             <WbsHeatmapCard data={data.wbsCodes} />
@@ -255,12 +245,22 @@ export default function ProjectHub({
         </BentoCell>
         <BentoCell>
           <div className="flex min-h-0 flex-1 flex-col">
+            <PerformanceGauge data={data.performanceFactor} />
+          </div>
+        </BentoCell>
+        <BentoCell>
+          <div className="flex min-h-0 flex-1 flex-col">
             <MilestoneBufferCard data={data.milestoneBuffer} />
           </div>
         </BentoCell>
         <BentoCell>
           <div className="flex min-h-0 flex-1 flex-col">
             <SkillsetGapCard data={data.skillsetGap} />
+          </div>
+        </BentoCell>
+        <BentoCell>
+          <div className="flex min-h-0 flex-1 flex-col">
+            <AllocationPlanCard data={data.allocationPlan} />
           </div>
         </BentoCell>
         <BentoCell>
