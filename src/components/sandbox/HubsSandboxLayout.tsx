@@ -51,7 +51,7 @@ export default function HubsSandboxLayout() {
               className="mt-0.5 text-[13px]"
               style={{ color: 'var(--figma-text-secondary)' }}
             >
-              Experience Layer Prototype — LEM Insight Components
+              Browse and preview all available dashboard cards by persona.
             </p>
           </div>
         </div>

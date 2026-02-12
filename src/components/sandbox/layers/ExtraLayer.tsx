@@ -20,7 +20,7 @@ export default function ExtraLayer({ data, persona }: ExtraLayerProps) {
     <LayerSection
       layerNumber={5}
       label="Extra"
-      subtitle="Customization and Drill-Down — deep-work tools for PMs and Planners"
+      subtitle="Detailed planning and drill-down tools."
     >
       <BentoGrid columns={3}>
         <SandboxCard cardId="smartBench" persona={persona}>

@@ -23,7 +23,7 @@ export default function EvergreenLayer({ data, persona }: EvergreenLayerProps) {
     <LayerSection
       layerNumber={1}
       label="Evergreen"
-      subtitle="The Perpetual Pulse — core vitals that answer: are we on track?"
+      subtitle="Always-on metrics like portfolio health, utilization, and margin."
     >
       <BentoGrid columns={2}>
         <BentoCell span={2}>

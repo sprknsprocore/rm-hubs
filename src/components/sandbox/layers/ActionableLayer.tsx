@@ -20,7 +20,7 @@ export default function ActionableLayer({ data, persona }: ActionableLayerProps)
     <LayerSection
       layerNumber={3}
       label="Actionable Insights"
-      subtitle="The Red Flag Layer — exceptions that drive the daily workflow"
+      subtitle="Exceptions and alerts that need attention today."
     >
       <BentoGrid columns={2}>
         <SandboxCard cardId="zeroActivity" persona={persona} exception>

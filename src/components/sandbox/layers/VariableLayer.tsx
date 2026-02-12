@@ -78,7 +78,7 @@ export default function VariableLayer({ data, persona }: VariableLayerProps) {
     <LayerSection
       layerNumber={4}
       label="Variable"
-      subtitle="Event-Driven Intelligence — cards appear only when triggered"
+      subtitle="Cards that appear when specific conditions are met."
       controls={controls}
     >
       {activeCards.length === 0 && (

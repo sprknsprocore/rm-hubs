@@ -25,7 +25,7 @@ export default function LemSpecificLayer({ data, persona }: LemSpecificLayerProp
     <LayerSection
       layerNumber={2}
       label="LEM Specific"
-      subtitle="Domain Health — Labor, Equipment, and Materials monitoring"
+      subtitle="Labor, Equipment, and Materials monitoring cards."
     >
       <BentoGrid columns={3}>
         <SandboxCard cardId="laborSCurve" persona={persona}>
