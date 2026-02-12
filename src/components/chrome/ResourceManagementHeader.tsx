@@ -1,5 +1,6 @@
 import { useRef, useEffect } from 'react'
-import { Search, Bell, Sparkles, X } from 'lucide-react'
+import { useNavigate } from 'react-router-dom'
+import { Search, Bell, Sparkles, X, SlidersHorizontal } from 'lucide-react'
 import { motion } from 'framer-motion'
 import type { ProjectData } from '../../types/lem'
 import { SPRING_BOUNCE } from '../../utils/motion'
@@ -23,6 +24,7 @@ export default function ResourceManagementHeader({
   onCloseInsights,
   projectData,
 }: ResourceManagementHeaderProps) {
+  const navigate = useNavigate()
   const searchInputRef = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
@@ -108,6 +110,17 @@ export default function ResourceManagementHeader({
             </span>
           </div>
         )}
+        <button
+          type="button"
+          onClick={() => navigate('/hubs-sandbox')}
+          className="flex h-8 shrink-0 items-center gap-1.5 rounded-md px-2.5 text-[12px] font-medium transition-colors hover:bg-black/[0.06] focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-black/10"
+          style={{ color: 'var(--figma-text-secondary)' }}
+          aria-label="Configure dashboard"
+          title="Configure dashboard"
+        >
+          <SlidersHorizontal className="h-3.5 w-3.5" />
+          <span className="hidden sm:inline">Configure</span>
+        </button>
         <button
           type="button"
           className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md transition-colors hover:bg-black/[0.06] focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-black/10"
