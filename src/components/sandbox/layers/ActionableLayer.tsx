@@ -6,6 +6,8 @@ import ZeroActivityCard from '../cards/ZeroActivityCard'
 import ExpiringCertsCard from '../cards/ExpiringCertsCard'
 import MissingProductionCard from '../cards/MissingProductionCard'
 import UnapprovedTimesheetsCard from '../cards/UnapprovedTimesheetsCard'
+import DearGcCard from '../cards/DearGcCard'
+import SkillsetGapCard from '../cards/SkillsetGapCard'
 import type { HubData, SandboxPersona } from '../../../hooks/useHubData'
 
 interface ActionableLayerProps {
@@ -51,6 +53,22 @@ export default function ActionableLayer({ data, persona }: ActionableLayerProps)
             audience="Project Managers, Payroll Coordinators, Controllers."
           >
             <UnapprovedTimesheetsCard data={data.unapprovedTimesheets} />
+          </CardDescriptor>
+        </SandboxCard>
+        <SandboxCard cardId="dearGc" persona={persona}>
+          <CardDescriptor
+            value="When a predecessor delay impacts your scope, a formal GC notification protects your contractual position and starts the documented record. This card auto-drafts the letter from project data."
+            audience="Specialty Contractors, Project Managers, Contract Administrators."
+          >
+            <DearGcCard />
+          </CardDescriptor>
+        </SandboxCard>
+        <SandboxCard cardId="skillsetGap" persona={persona} exception>
+          <CardDescriptor
+            value="Highlights roles where assigned headcount falls short of project requirements. Gaps need immediate Smart Bench or external sourcing action — waiting means starting a trade short-handed."
+            audience="Resource Planners, Operations Directors, Engineering Planners."
+          >
+            <SkillsetGapCard data={data.skillsetGap} />
           </CardDescriptor>
         </SandboxCard>
       </BentoGrid>

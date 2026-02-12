@@ -7,6 +7,7 @@ import BidSimulatorToggle from '../cards/BidSimulatorToggle'
 import HistoricalBenchmarkCard from '../cards/HistoricalBenchmarkCard'
 import ScenarioPlanningCard from '../cards/ScenarioPlanningCard'
 import FuelTrendsCard from '../cards/FuelTrendsCard'
+import GoldenThreadTimelineCard from '../cards/GoldenThreadTimelineCard'
 import type { HubData, SandboxPersona } from '../../../hooks/useHubData'
 
 interface ExtraLayerProps {
@@ -60,6 +61,14 @@ export default function ExtraLayer({ data, persona }: ExtraLayerProps) {
             audience="Equipment Managers, Fleet Operations, Cost Engineers."
           >
             <FuelTrendsCard data={data.fuelTrends} />
+          </CardDescriptor>
+        </SandboxCard>
+        <SandboxCard cardId="goldenThreadTimeline" persona={persona}>
+          <CardDescriptor
+            value="The chronological field log trail that connects daily quantities, hours, and variance reasons — the 'golden thread' from field to finance. Variance entries highlighted in red become the starting point for reconciliation."
+            audience="Project Managers, Field Engineers, Controllers."
+          >
+            <GoldenThreadTimelineCard data={data.fieldLogs} />
           </CardDescriptor>
         </SandboxCard>
       </BentoGrid>

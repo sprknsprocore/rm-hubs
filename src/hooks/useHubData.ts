@@ -191,6 +191,113 @@ export interface CostScenario {
   active: boolean
 }
 
+// ── New card types (hub parity) ─────────────────────────────────────
+
+export interface DailyHuddleRecapData {
+  date: string // ISO date
+  achievedQuantities: Record<string, number>
+  goalQuantities: Record<string, number>
+}
+
+export interface BurnCurvePoint {
+  period: string
+  hoursSpentPct: number
+  workCompletePct: number
+  benchmarkPct: number
+}
+
+export interface BurnCurveData {
+  points: BurnCurvePoint[]
+  delayFlag: boolean
+  insight: string
+}
+
+export interface ProductionHealthPeriod {
+  period: string
+  earnedHours: number
+  actualHours: number
+  cpi: number
+}
+
+export interface ProductionHealthData {
+  periods: ProductionHealthPeriod[]
+  varianceReason: string
+  projectedOverrunHours: number
+}
+
+export interface EquipmentPin {
+  id: string
+  name: string
+  type: string
+  lat: number
+  lng: number
+  lastActivityAt: string // ISO
+  status: 'active' | 'idle'
+  site: string
+}
+
+export interface EarthMoverData {
+  actualCubicYards: number
+  budgetedCubicYards: number
+  weatherRisk: boolean
+  industryAvgUtilizationPct: number
+}
+
+export interface MilestoneItem {
+  id: string
+  name: string
+  status: 'on_track' | 'delayed' | 'at_risk'
+  predecessorDelay?: string
+  atRiskReason?: string
+}
+
+export interface CapacityDemandBar {
+  period: string
+  demand: number
+}
+
+export interface CapacityDemandData {
+  bars: CapacityDemandBar[]
+  capacityLine: number
+  capacityBenchmark: number
+}
+
+export interface CycleTimeData {
+  actualCyclesPerDay: number
+  bidCyclesPerDay: number
+  context: string
+}
+
+export interface FieldLogEntry {
+  id: string
+  date: string
+  quantityClaimed: number
+  manHoursLogged: number
+  fieldNoteSnippet: string
+  varianceReason?: string
+}
+
+export interface WbsCodeItem {
+  id: string
+  costCodeOrWBS: string
+  earnedHours: number
+  actualHours: number
+  performanceFactor: number
+}
+
+export interface MilestoneBufferItem {
+  milestoneName: string
+  predecessorName: string
+  daysUntil: number
+}
+
+export interface SkillsetGapItem {
+  role: string
+  required: number
+  assigned: number
+  period: string
+}
+
 // ── Variable layer triggers ─────────────────────────────────────────
 
 export interface VariableTriggers {
@@ -244,6 +351,29 @@ export interface HubData {
   fuelTrends: FuelTrendPoint[]
   historicalBenchmark: HistoricalBenchmarkData[]
   scenarioPlanning: ScenarioPlanningData
+
+  // ── Hub-parity additions ──
+  // Layer 1
+  dailyHuddle: DailyHuddleRecapData
+  burnCurve: BurnCurveData
+  productionHealth: ProductionHealthData
+
+  // Layer 2
+  commandCenterPins: EquipmentPin[]
+  earthMover: EarthMoverData
+  milestones: MilestoneItem[]
+  capacityDemand: CapacityDemandData
+  cycleTime: CycleTimeData
+  wbsCodes: WbsCodeItem[]
+
+  // Layer 3
+  skillsetGap: SkillsetGapItem[]
+
+  // Layer 4
+  milestoneBuffer: MilestoneBufferItem[]
+
+  // Layer 5
+  fieldLogs: FieldLogEntry[]
 
   // Variable triggers
   triggers: VariableTriggers
@@ -499,6 +629,111 @@ export function useHubData(): HubData {
       ],
     }
 
+    // ── Hub-parity data ──
+
+    const yesterday = new Date()
+    yesterday.setDate(yesterday.getDate() - 1)
+    const dailyHuddle: DailyHuddleRecapData = {
+      date: yesterday.toISOString(),
+      achievedQuantities: { 'CY Excavated': 420, 'Tons Base': 180, 'LF Pipe': 310 },
+      goalQuantities: { 'CY Excavated': 500, 'Tons Base': 200, 'LF Pipe': 350 },
+    }
+
+    const burnCurve: BurnCurveData = {
+      points: [
+        { period: 'W0', hoursSpentPct: 0, workCompletePct: 0, benchmarkPct: 0 },
+        { period: 'W1', hoursSpentPct: 12, workCompletePct: 10, benchmarkPct: 12 },
+        { period: 'W2', hoursSpentPct: 28, workCompletePct: 22, benchmarkPct: 26 },
+        { period: 'W3', hoursSpentPct: 48, workCompletePct: 38, benchmarkPct: 44 },
+        { period: 'W4', hoursSpentPct: 65, workCompletePct: 52, benchmarkPct: 60 },
+      ],
+      delayFlag: true,
+      insight: '52% work complete vs 65% hours spent — productivity lag detected',
+    }
+
+    const productionHealth: ProductionHealthData = {
+      periods: [
+        { period: 'W1', earnedHours: 380, actualHours: 400, cpi: 0.95 },
+        { period: 'W2', earnedHours: 420, actualHours: 460, cpi: 0.91 },
+        { period: 'W3', earnedHours: 390, actualHours: 480, cpi: 0.81 },
+        { period: 'W4', earnedHours: 410, actualHours: 450, cpi: 0.91 },
+        { period: 'W5', earnedHours: 440, actualHours: 420, cpi: 1.05 },
+      ],
+      varianceReason: 'Area 2 Slab delayed by GC — forced crew to rework sequence',
+      projectedOverrunHours: 320,
+    }
+
+    const commandCenterPins: EquipmentPin[] = [
+      { id: 'EXC-092', name: 'CAT 336F', type: 'Excavator', lat: 47.608, lng: -122.335, lastActivityAt: '2026-02-06T14:00:00Z', status: 'idle', site: 'Site A' },
+      { id: 'DZ-101', name: 'CAT D6', type: 'Dozer', lat: 47.612, lng: -122.340, lastActivityAt: '2026-02-11T08:30:00Z', status: 'active', site: 'Site A' },
+      { id: 'LD-045', name: 'CAT 950', type: 'Loader', lat: 47.605, lng: -122.330, lastActivityAt: '2026-02-05T10:00:00Z', status: 'idle', site: 'Site B' },
+      { id: 'CR-018', name: 'Liebherr LTM 1100', type: 'Crane', lat: 47.615, lng: -122.345, lastActivityAt: '2026-02-11T09:15:00Z', status: 'active', site: 'Site A' },
+      { id: 'HT-033', name: 'Kenworth T880', type: 'Haul Truck', lat: 47.609, lng: -122.338, lastActivityAt: '2026-02-04T16:00:00Z', status: 'idle', site: 'Site B' },
+    ]
+
+    const earthMover: EarthMoverData = {
+      actualCubicYards: 12400,
+      budgetedCubicYards: 16000,
+      weatherRisk: true,
+      industryAvgUtilizationPct: 72,
+    }
+
+    const milestones: MilestoneItem[] = [
+      { id: 'ms1', name: 'Foundation Complete', status: 'on_track' },
+      { id: 'ms2', name: 'Slab Pour', status: 'delayed', predecessorDelay: '4 day delay from weather' },
+      { id: 'ms3', name: 'Steel Erection', status: 'on_track' },
+      { id: 'ms4', name: 'Electrical Rough-in', status: 'at_risk', atRiskReason: 'Waiting on Slab Pour completion' },
+      { id: 'ms5', name: 'Roof Dry-in', status: 'on_track' },
+    ]
+
+    const capacityDemand: CapacityDemandData = {
+      bars: [
+        { period: 'Mar', demand: 38 },
+        { period: 'Apr', demand: 42 },
+        { period: 'May', demand: 55 },
+        { period: 'Jun', demand: 60 },
+        { period: 'Jul', demand: 52 },
+        { period: 'Aug', demand: 48 },
+      ],
+      capacityLine: 45,
+      capacityBenchmark: 50,
+    }
+
+    const cycleTime: CycleTimeData = {
+      actualCyclesPerDay: 18,
+      bidCyclesPerDay: 22,
+      context: 'Site B mud conditions; haul distance +45%',
+    }
+
+    const fieldLogs: FieldLogEntry[] = [
+      { id: 'fl1', date: '2026-02-11T07:30:00Z', quantityClaimed: 85, manHoursLogged: 64, fieldNoteSnippet: 'Completed foundation pour in Area 3. Good weather conditions.' },
+      { id: 'fl2', date: '2026-02-10T07:00:00Z', quantityClaimed: 72, manHoursLogged: 56, fieldNoteSnippet: 'Rebar placement delayed 2 hours waiting for crane.', varianceReason: 'Crane scheduling conflict' },
+      { id: 'fl3', date: '2026-02-09T06:45:00Z', quantityClaimed: 0, manHoursLogged: 40, fieldNoteSnippet: 'Rain day — indoor prep work only.', varianceReason: 'Weather delay' },
+      { id: 'fl4', date: '2026-02-08T07:15:00Z', quantityClaimed: 95, manHoursLogged: 72, fieldNoteSnippet: 'Exceeded daily target on conduit installation. Crew of 9.' },
+      { id: 'fl5', date: '2026-02-07T07:00:00Z', quantityClaimed: 60, manHoursLogged: 48, fieldNoteSnippet: 'Partial day — safety stand-down for toolbox talk.' },
+    ]
+
+    const wbsCodes: WbsCodeItem[] = [
+      { id: 'wbs1', costCodeOrWBS: '03 30 00 - Concrete', earnedHours: 480, actualHours: 520, performanceFactor: 0.92 },
+      { id: 'wbs2', costCodeOrWBS: '05 12 00 - Structural Steel', earnedHours: 320, actualHours: 310, performanceFactor: 1.03 },
+      { id: 'wbs3', costCodeOrWBS: '26 05 00 - Electrical', earnedHours: 180, actualHours: 240, performanceFactor: 0.75 },
+      { id: 'wbs4', costCodeOrWBS: '09 91 00 - Painting', earnedHours: 90, actualHours: 85, performanceFactor: 1.06 },
+      { id: 'wbs5', costCodeOrWBS: '31 23 00 - Excavation', earnedHours: 600, actualHours: 580, performanceFactor: 1.03 },
+      { id: 'wbs6', costCodeOrWBS: '22 11 00 - Plumbing', earnedHours: 140, actualHours: 170, performanceFactor: 0.82 },
+    ]
+
+    const milestoneBuffer: MilestoneBufferItem[] = [
+      { milestoneName: 'Electrical Rough-in', predecessorName: 'Slab Pour', daysUntil: 4 },
+      { milestoneName: 'Interior Finishes', predecessorName: 'Roof Dry-in', daysUntil: 12 },
+      { milestoneName: 'Mechanical Trim', predecessorName: 'Drywall Complete', daysUntil: 7 },
+    ]
+
+    const skillsetGap: SkillsetGapItem[] = [
+      { role: 'PLC Developers', required: 2, assigned: 1, period: 'July' },
+      { role: 'Crane Operators', required: 3, assigned: 3, period: 'June' },
+      { role: 'Pipe Fitters', required: 4, assigned: 2, period: 'August' },
+    ]
+
     return {
       performanceFactor,
       budgetVsActual,
@@ -506,23 +741,35 @@ export function useHubData(): HubData {
       workforceCount,
       portfolioHealth,
       earnedValue,
+      dailyHuddle,
+      burnCurve,
+      productionHealth,
       laborSCurve,
       equipmentUtilization,
       materialYield,
       allocationPlan,
       utilizationTrend,
+      commandCenterPins,
+      earthMover,
+      milestones,
+      capacityDemand,
+      cycleTime,
+      wbsCodes,
       zeroActivityAlerts,
       expiringCerts,
       missingProduction,
       unapprovedTimesheets,
+      skillsetGap,
       weatherRisk,
       predecessorDelay,
       equipmentFaultCodes,
+      milestoneBuffer,
       smartBench,
       bidSimulator,
       fuelTrends,
       historicalBenchmark,
       scenarioPlanning,
+      fieldLogs,
       triggers,
     }
   }, [unified, triggers])

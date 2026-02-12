@@ -5,6 +5,7 @@ import LayerSection from '../LayerSection'
 import WeatherRiskCard from '../cards/WeatherRiskCard'
 import PredecessorDelayCard from '../cards/PredecessorDelayCard'
 import CriticalMaintenanceCard from '../cards/CriticalMaintenanceCard'
+import MilestoneBufferCard from '../cards/MilestoneBufferCard'
 import type { HubData, SandboxPersona } from '../../../hooks/useHubData'
 import { EASE_OUT_EXPO } from '../../../utils/motion'
 
@@ -151,6 +152,18 @@ export default function VariableLayer({ data, persona }: VariableLayerProps) {
             </motion.div>
           )}
         </AnimatePresence>
+      </div>
+
+      {/* Static variable card — always visible when buffer data exists */}
+      <div className="mt-4 grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3 md:gap-[var(--bento-gap)]">
+        <SandboxCard cardId="milestoneBuffer" persona={persona}>
+          <CardDescriptor
+            value="Shows how many days of buffer exist between predecessor completion and the next milestone. Low-buffer milestones are the most vulnerable to cascade delay — giving PMs time to intervene before it's too late."
+            audience="Specialty Contractors, Schedulers, Project Managers."
+          >
+            <MilestoneBufferCard data={data.milestoneBuffer} />
+          </CardDescriptor>
+        </SandboxCard>
       </div>
     </LayerSection>
   )

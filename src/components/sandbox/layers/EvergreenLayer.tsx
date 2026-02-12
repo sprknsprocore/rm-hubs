@@ -8,6 +8,9 @@ import ProjectedMarginCard from '../cards/ProjectedMarginCard'
 import PortfolioHeatmap from '../cards/PortfolioHeatmap'
 import EarnedValueCard from '../cards/EarnedValueCard'
 import WorkforceCountCard from '../cards/WorkforceCountCard'
+import DailyHuddleRecapCard from '../cards/DailyHuddleRecapCard'
+import BurnCurveCard from '../cards/BurnCurveCard'
+import ProductionHealthCard from '../cards/ProductionHealthCard'
 import type { HubData, SandboxPersona } from '../../../hooks/useHubData'
 
 interface EvergreenLayerProps {
@@ -65,6 +68,34 @@ export default function EvergreenLayer({ data, persona }: EvergreenLayerProps) {
             <ProjectedMarginCard data={data.projectedMargin} />
           </CardDescriptor>
         </SandboxCard>
+        <SandboxCard cardId="dailyHuddle" persona={persona}>
+          <CardDescriptor
+            value="A quick morning check on yesterday's field output vs. daily targets. Green means the crew hit the mark; red means today's standup needs to address the shortfall before it compounds."
+            audience="Superintendents, Foremen, Heavy Civil PMs — anyone running the daily standup."
+          >
+            <DailyHuddleRecapCard data={data.dailyHuddle} />
+          </CardDescriptor>
+        </SandboxCard>
+        <BentoCell span={2}>
+          <SandboxCard cardId="burnCurve" persona={persona}>
+            <CardDescriptor
+              value="The three-line burn curve is the clearest early-warning system for productivity lag. When % hours spent diverges from % work complete, it means the project is burning budget faster than it's earning value."
+              audience="Project Managers, Specialty Contractors, Schedulers — anyone tracking labor productivity."
+            >
+              <BurnCurveCard data={data.burnCurve} />
+            </CardDescriptor>
+          </SandboxCard>
+        </BentoCell>
+        <BentoCell span={2}>
+          <SandboxCard cardId="productionHealth" persona={persona}>
+            <CardDescriptor
+              value="Combines earned vs. actual hours per period with a CPI trend line. When the CPI line dips below 1.0, it pinpoints which periods drove the overrun — so PMs can reconcile the forecast before it's too late."
+              audience="Project Managers, General Superintendents, Controllers."
+            >
+              <ProductionHealthCard data={data.productionHealth} />
+            </CardDescriptor>
+          </SandboxCard>
+        </BentoCell>
         <BentoCell span={2}>
           <SandboxCard cardId="portfolioHeatmap" persona={persona}>
             <CardDescriptor
