@@ -6,20 +6,15 @@ import { useHubData } from '../../../hooks/useHubData'
 
 // Sandbox card components (reused across hubs)
 import PerformanceGauge from '../../sandbox/cards/PerformanceGauge'
-import BudgetVsActualCard from '../../sandbox/cards/BudgetVsActualCard'
 import ProductionHealthCard from '../../sandbox/cards/ProductionHealthCard'
 import EarthMoverCard from '../../sandbox/cards/EarthMoverCard'
 import CycleTimeCard from '../../sandbox/cards/CycleTimeCard'
 import MaterialYieldCard from '../../sandbox/cards/MaterialYieldCard'
 import WbsHeatmapCard from '../../sandbox/cards/WbsHeatmapCard'
-import CommandCenterMapCard from '../../sandbox/cards/CommandCenterMapCard'
-import GoldenThreadTimelineCard from '../../sandbox/cards/GoldenThreadTimelineCard'
-import DailyHuddleRecapCard from '../../sandbox/cards/DailyHuddleRecapCard'
 import WeatherRiskCard from '../../sandbox/cards/WeatherRiskCard'
 import CriticalMaintenanceCard from '../../sandbox/cards/CriticalMaintenanceCard'
 import EarnedValueCard from '../../sandbox/cards/EarnedValueCard'
 import BurnCurveCard from '../../sandbox/cards/BurnCurveCard'
-import LaborSCurveCard from '../../sandbox/cards/LaborSCurveCard'
 import MilestoneTrackerCard from '../../sandbox/cards/MilestoneTrackerCard'
 import MissingProductionCard from '../../sandbox/cards/MissingProductionCard'
 import DearGcCard from '../../sandbox/cards/DearGcCard'
@@ -28,6 +23,7 @@ import MilestoneBufferCard from '../../sandbox/cards/MilestoneBufferCard'
 import SkillsetGapCard from '../../sandbox/cards/SkillsetGapCard'
 import AllocationPlanCard from '../../sandbox/cards/AllocationPlanCard'
 import HistoricalBenchmarkCard from '../../sandbox/cards/HistoricalBenchmarkCard'
+import GoldenThreadTimelineCard from '../../sandbox/cards/GoldenThreadTimelineCard'
 
 interface ProjectHubProps {
   projectData: ProjectData
@@ -79,7 +75,9 @@ export default function ProjectHub({
     />
   )
 
-  // ── Persona A: Heavy Civil PM ──
+  // ── Persona A: Heavy Civil PM (9 static + 2 variable) ──
+  // Removed: BudgetVsActual (covered by Production Health CPI),
+  //          DailyHuddle (on company hub), CommandCenterMap (on company hub)
   if (persona === 'heavyCivil') {
     return (
       <>
@@ -92,11 +90,6 @@ export default function ProjectHub({
           <BentoCell>
             <div className="flex min-h-0 flex-1 flex-col">
               <PerformanceGauge data={data.performanceFactor} />
-            </div>
-          </BentoCell>
-          <BentoCell>
-            <div className="flex min-h-0 flex-1 flex-col">
-              <BudgetVsActualCard data={data.budgetVsActual} />
             </div>
           </BentoCell>
           <BentoCell>
@@ -114,19 +107,9 @@ export default function ProjectHub({
               <MaterialYieldCard data={data.materialYield} />
             </div>
           </BentoCell>
-          <BentoCell>
-            <div className="flex min-h-0 flex-1 flex-col">
-              <DailyHuddleRecapCard data={data.dailyHuddle} />
-            </div>
-          </BentoCell>
           <BentoCell span={2}>
             <div className="flex min-h-0 flex-1 flex-col">
               <WbsHeatmapCard data={data.wbsCodes} />
-            </div>
-          </BentoCell>
-          <BentoCell span={2}>
-            <div className="flex min-h-0 flex-1 flex-col">
-              <CommandCenterMapCard data={data.commandCenterPins} />
             </div>
           </BentoCell>
           <BentoCell span={2}>
@@ -152,7 +135,10 @@ export default function ProjectHub({
     )
   }
 
-  // ── Persona B: Specialty Contractor ──
+  // ── Persona B: Specialty Contractor (9 static + 2 variable) ──
+  // Removed: PerformanceGauge (redundant with EVM CPI/SPI),
+  //          LaborSCurve (overlaps Burn Curve), MaterialYield (on company hub),
+  //          GoldenThread (deep-drill, stays in sandbox)
   if (persona === 'specialty') {
     return (
       <>
@@ -160,16 +146,6 @@ export default function ProjectHub({
           <BentoCell span={2}>
             <div className="flex min-h-0 flex-1 flex-col">
               <EarnedValueCard data={data.earnedValue} />
-            </div>
-          </BentoCell>
-          <BentoCell>
-            <div className="flex min-h-0 flex-1 flex-col">
-              <PerformanceGauge data={data.performanceFactor} />
-            </div>
-          </BentoCell>
-          <BentoCell>
-            <div className="flex min-h-0 flex-1 flex-col">
-              <MaterialYieldCard data={data.materialYield} />
             </div>
           </BentoCell>
           <BentoCell span={2}>
@@ -189,27 +165,17 @@ export default function ProjectHub({
           </BentoCell>
           <BentoCell>
             <div className="flex min-h-0 flex-1 flex-col">
-              <LaborSCurveCard data={data.laborSCurve} />
-            </div>
-          </BentoCell>
-          <BentoCell>
-            <div className="flex min-h-0 flex-1 flex-col">
               <MilestoneTrackerCard data={data.milestones} />
-            </div>
-          </BentoCell>
-          <BentoCell span={2}>
-            <div className="flex min-h-0 flex-1 flex-col">
-              <GoldenThreadTimelineCard data={data.fieldLogs} />
-            </div>
-          </BentoCell>
-          <BentoCell span={2}>
-            <div className="flex min-h-0 flex-1 flex-col">
-              <MissingProductionCard data={data.missingProduction} />
             </div>
           </BentoCell>
           <BentoCell>
             <div className="flex min-h-0 flex-1 flex-col">
               <DearGcCard />
+            </div>
+          </BentoCell>
+          <BentoCell span={2}>
+            <div className="flex min-h-0 flex-1 flex-col">
+              <MissingProductionCard data={data.missingProduction} />
             </div>
           </BentoCell>
         </BentoGrid>
@@ -229,7 +195,7 @@ export default function ProjectHub({
     )
   }
 
-  // ── Persona C: Engineering Planner ──
+  // ── Persona C: Engineering Planner (8 static + 2 variable — no change) ──
   return (
     <>
       <BentoGrid columns={2} rows="hero-action">
